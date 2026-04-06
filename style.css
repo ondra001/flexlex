@@ -1098,22 +1098,20 @@ img { max-width: 100%; display: block; }
 .store-badge {
   display: inline-flex;
   align-items: center;
-  gap: 14px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 14px 28px;
-  color: #fff;
+  background: transparent;
+  border: none;
+  padding: 0;
   transition: all 0.25s;
 }
-.store-badge:hover {
-  background: rgba(255,255,255,0.08);
-  border-color: var(--border-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+.store-badge img {
+  height: 48px;
+  width: auto;
+  display: block;
 }
-.store-badge small { display: block; font-size: 0.7rem; opacity: 0.6; text-align: left; }
-.store-badge strong { display: block; font-size: 1.1rem; text-align: left; }
+.store-badge:hover {
+  transform: translateY(-2px);
+  opacity: 0.85;
+}
 .cta__note {
   margin-top: 20px;
   font-size: 0.85rem;
