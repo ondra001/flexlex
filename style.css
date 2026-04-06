@@ -872,6 +872,10 @@ img { max-width: 100%; display: block; }
   font-size: 0.75rem;
   font-weight: 700;
   border-radius: 100px;
+  white-space: nowrap;
+}
+.pricing-card__badge--lifetime {
+  background: linear-gradient(135deg, var(--purple), #e86baf);
   letter-spacing: 0.04em;
   box-shadow: 0 4px 16px rgba(94,163,248,0.3);
 }
