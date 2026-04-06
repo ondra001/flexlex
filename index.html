@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FlexLex - Master Vocabulary Your Way</title>
+  <meta name="description" content="FlexLex is a powerful vocabulary learning app with flashcards, spaced repetition, 8 study modes, OCR scanning, and full offline support for Android and iOS.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="FlexLex — Master Vocabulary Your Way">
+  <meta property="og:description" content="8 study modes, spaced repetition, OCR scanning, and full offline support. Free to start, no account needed.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://flexlex.app">
+  <meta property="og:image" content="https://flexlex.app/og-image.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="FlexLex — Master Vocabulary Your Way">
+  <meta name="twitter:description" content="8 study modes, spaced repetition, OCR scanning, and full offline support. Free to start, no account needed.">
+  <meta name="twitter:image" content="https://flexlex.app/og-image.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="FL-logo.png">
+  <link rel="apple-touch-icon" href="FL-logo.png">
+
+  <!-- Theme -->
+  <meta name="theme-color" content="#08090e">
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- GLOW ORBS (background decoration) -->
+  <div class="glow glow--1"></div>
+  <div class="glow glow--2"></div>
+  <div class="glow glow--3"></div>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="container nav__inner">
+      <a href="#" class="nav__logo">
+        <img src="FL-logo.png" alt="FlexLex" class="logo-icon">
+        <span>FlexLex</span>
+      </a>
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav__links" id="navLinks">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#modes">Study Modes</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#download" class="btn btn--nav">Get the App</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero" id="hero">
+    <div class="container hero__inner">
+      <div class="hero__text">
+        <div class="hero__badge">Vocabulary Learning, Reimagined</div>
+        <h1>Learn Words.<br><span class="gradient-text">Remember Them.</span></h1>
+        <p class="hero__sub">
+          8 study modes. Spaced repetition that adapts to you.
+          OCR scanning. Translation suggestions. Full offline support.
+          No account needed. Just you and the words.
+        </p>
+        <div class="hero__actions">
+          <a href="#download" class="btn btn--primary btn--lg">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            Download Free
+          </a>
+          <a href="#how-it-works" class="btn btn--glass btn--lg">See How It Works</a>
+        </div>
+        <div class="hero__stats">
+          <div class="hero__stat">
+            <strong>8</strong><span>Study Modes</span>
+          </div>
+          <div class="hero__stat-divider"></div>
+          <div class="hero__stat">
+            <strong>100%</strong><span>Offline</span>
+          </div>
+          <div class="hero__stat-divider"></div>
+          <div class="hero__stat">
+            <strong>Free</strong><span>To Start</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero__visual">
+        <div class="phone-mockup">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="demo-header">
+              <span class="demo-set-name">German Basics</span>
+              <span class="demo-counter">4 / 20</span>
+            </div>
+            <div class="demo-card" id="demoCard">
+              <div class="demo-card__front">
+                <div class="demo-card__label">Word</div>
+                <div class="demo-card__word">Schmetterling</div>
+                <div class="demo-card__hint">Tap to flip</div>
+              </div>
+              <div class="demo-card__back">
+                <div class="demo-card__label">Translation</div>
+                <div class="demo-card__word demo-card__word--answer">Butterfly</div>
+                <div class="demo-card__hint">Tap to flip</div>
+              </div>
+            </div>
+            <div class="demo-actions demo-actions--two">
+              <div class="demo-action demo-action--no">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                Don't Know
+              </div>
+              <div class="demo-action demo-action--yes">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                Know
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="float-card float-card--1">
+          <div class="float-card__icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <div>
+            <strong>SRS Active</strong>
+            <span>Next review in 2d</span>
+          </div>
+        </div>
+        <div class="float-card float-card--2">
+          <div class="float-card__streak">12</div>
+          <span>Day streak</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- FEATURES -->
+  <section class="section features" id="features">
+    <div class="container">
+      <div class="section-label">Features</div>
+      <h2 class="section__title">Everything You Need.<br><span class="gradient-text">Nothing You Don't.</span></h2>
+      <p class="section__sub">No bloat, no subscriptions, no cloud dependency. FlexLex is built for learners who want results.</p>
+
+      <div class="bento">
+        <div class="bento__item bento__item--wide bento__item--srs">
+          <div class="bento__content">
+            <div class="bento__icon bento__icon--blue">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            </div>
+            <h3>Spaced Repetition System</h3>
+            <p>FlexLex tracks every answer and schedules reviews right before you'd forget. Words you struggle with appear more often. Words you know fade into long-term memory.</p>
+          </div>
+          <div class="bento__visual bento__visual--srs">
+            <div class="srs-demo">
+              <div class="srs-bar" style="--h: 20%; --color: var(--red)"><span>Day 1</span></div>
+              <div class="srs-bar" style="--h: 45%; --color: var(--orange)"><span>Day 3</span></div>
+              <div class="srs-bar" style="--h: 65%; --color: var(--blue)"><span>Day 7</span></div>
+              <div class="srs-bar" style="--h: 80%; --color: var(--teal)"><span>Day 14</span></div>
+              <div class="srs-bar" style="--h: 95%; --color: var(--green)"><span>Day 30</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bento__item bento__item--ocr">
+          <div class="bento__icon bento__icon--purple">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <h3>OCR Scanner</h3>
+          <p>Point your camera at a textbook, worksheet, or whiteboard. Scan word–translation pairs or individual words — FlexLex reads them and imports them into your set instantly.</p>
+        </div>
+
+        <div class="bento__item bento__item--offline">
+          <div class="bento__icon bento__icon--green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Fully Offline</h3>
+          <p>Everything lives on your device. No account, no internet, no data collection. Your words are yours alone.</p>
+        </div>
+
+        <div class="bento__item bento__item--organize">
+          <div class="bento__icon bento__icon--orange">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+          </div>
+          <h3>Smart Organization</h3>
+          <p>Folders, sets, nested structures. Organize by language, by topic, by difficulty. However your brain works.</p>
+        </div>
+
+        <div class="bento__item bento__item--wide bento__item--article">
+          <div class="bento__content">
+            <div class="bento__icon bento__icon--pink">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/></svg>
+            </div>
+            <h3>Article Color Coding</h3>
+            <p>Learning German? Assign colors to <em>der</em>, <em>die</em>, <em>das</em> and see them highlighted everywhere in the app. Works with any language's grammar markers.</p>
+          </div>
+          <div class="bento__visual bento__visual--article">
+            <div class="article-demo">
+              <div class="article-word article-word--der"><span class="article-tag article-tag--blue">der</span> Hund</div>
+              <div class="article-word article-word--die"><span class="article-tag article-tag--red">die</span> Katze</div>
+              <div class="article-word article-word--das"><span class="article-tag article-tag--green">das</span> Haus</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bento__item bento__item--import">
+          <div class="bento__icon bento__icon--teal">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+          </div>
+          <h3>Easy Import</h3>
+          <p>Load words from Excel files, text files, or scan them with your camera. Building your vocabulary library takes seconds.</p>
+        </div>
+
+        <div class="bento__item bento__item--half bento__item--stats">
+          <div class="bento__icon bento__icon--blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+          </div>
+          <h3>Progress Tracking</h3>
+          <p>Daily stats, accuracy charts, word status breakdowns. See exactly where you stand and what needs work.</p>
+        </div>
+
+        <div class="bento__item bento__item--half bento__item--dict">
+          <div class="bento__icon bento__icon--purple">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+          </div>
+          <h3>Smart Suggestions</h3>
+          <p>Type a word and get instant translation suggestions. Powered by built-in dictionaries for dozens of languages.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section how" id="how-it-works">
+    <div class="container">
+      <div class="section-label">How It Works</div>
+      <h2 class="section__title">From Zero to Fluent<br><span class="gradient-text">in 4 Simple Steps</span></h2>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step__number">01</div>
+          <div class="step__content">
+            <h3>Create or Import</h3>
+            <p>Add words manually, scan them with your camera, or load an Excel file. Build your vocabulary library in seconds.</p>
+          </div>
+        </div>
+        <div class="step__connector"></div>
+        <div class="step">
+          <div class="step__number">02</div>
+          <div class="step__content">
+            <h3>Choose Your Mode</h3>
+            <p>Flashcards for quick review. Write mode for active recall. Match game for fun. Pick what fits your mood and available time.</p>
+          </div>
+        </div>
+        <div class="step__connector"></div>
+        <div class="step">
+          <div class="step__number">03</div>
+          <div class="step__content">
+            <h3>Study &amp; Get Feedback</h3>
+            <p>Every answer is tracked. Words are automatically categorized as Know, Don't Know, or Hard. The SRS algorithm adjusts your review schedule in real time.</p>
+          </div>
+        </div>
+        <div class="step__connector"></div>
+        <div class="step">
+          <div class="step__number">04</div>
+          <div class="step__content">
+            <h3>Watch Your Progress</h3>
+            <p>Track daily streaks, accuracy rates, and mastery levels. See words move from "Don't Know" to "Know" as your vocabulary grows.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STUDY MODES -->
+  <section class="section modes" id="modes">
+    <div class="container">
+      <div class="section-label">Study Modes</div>
+      <h2 class="section__title">8 Ways to Learn.<br><span class="gradient-text">One App.</span></h2>
+      <p class="section__sub">Different modes activate different parts of your memory. Mix them for maximum retention.</p>
+
+      <div class="modes__grid">
+        <div class="mode-card mode-card--featured">
+          <div class="mode-card__glow"></div>
+          <div class="mode-card__number">01</div>
+          <h3>Flashcards</h3>
+          <p>The classic. Swipe through cards, mark what you know and what you don't. Flip to reveal. Simple, fast, effective.</p>
+          <div class="mode-card__tags">
+            <span>Swipe gestures</span>
+            <span>Flip animation</span>
+            <span>SRS integrated</span>
+          </div>
+        </div>
+
+        <div class="mode-card">
+          <div class="mode-card__number">02</div>
+          <h3>Write Mode</h3>
+          <p>See the word, type the translation from memory. No guessing from options. Pure active recall.</p>
+          <div class="mode-card__tags">
+            <span>Active recall</span>
+            <span>Instant feedback</span>
+          </div>
+        </div>
+
+        <div class="mode-card">
+          <div class="mode-card__number">03</div>
+          <h3>Spell Mode</h3>
+          <p>Hear the pronunciation, spell it out letter by letter. Perfect for tricky words and new alphabets.</p>
+          <div class="mode-card__tags">
+            <span>Audio cues</span>
+            <span>Letter precision</span>
+          </div>
+        </div>
+
+        <div class="mode-card">
+          <div class="mode-card__number">04</div>
+          <h3>Multiple Choice</h3>
+          <p>Pick the right answer from 4 to 8 options. Quick rounds for reinforcement between longer study sessions.</p>
+          <div class="mode-card__tags">
+            <span>4-8 options</span>
+            <span>Quick rounds</span>
+          </div>
+        </div>
+
+        <div class="mode-card">
+          <div class="mode-card__number">05</div>
+          <h3>Test Mode</h3>
+          <p>Mixed question types in a timed session. The closest thing to a real exam. See where you truly stand.</p>
+          <div class="mode-card__tags">
+            <span>Mixed types</span>
+            <span>Timed</span>
+          </div>
+        </div>
+
+        <div class="mode-card">
+          <div class="mode-card__number">06</div>
+          <h3>Match Game</h3>
+          <p>Pair words with translations against the clock. Competitive, fast, and surprisingly addictive.</p>
+          <div class="mode-card__tags">
+            <span>Time attack</span>
+            <span>Pair matching</span>
+          </div>
+        </div>
+
+        <div class="mode-card">
+          <div class="mode-card__number">07</div>
+          <h3>Rush Game</h3>
+          <p>How many can you get right before time runs out? Push your limits and beat your own high score.</p>
+          <div class="mode-card__tags">
+            <span>Speed challenge</span>
+            <span>High scores</span>
+          </div>
+        </div>
+
+        <div class="mode-card mode-card--wide">
+          <div class="mode-card__number">08</div>
+          <h3>Learn Mode</h3>
+          <p>A guided session that teaches you new words step by step. The SRS algorithm picks what you need to learn next and schedules reviews at the perfect time.</p>
+          <div class="mode-card__tags">
+            <span>Guided learning</span>
+            <span>SRS powered</span>
+            <span>Adaptive difficulty</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY FLEXLEX -->
+  <section class="section why" id="why">
+    <div class="container">
+      <div class="section-label">Why FlexLex</div>
+      <h2 class="section__title">Built Different.<br><span class="gradient-text">On Purpose.</span></h2>
+      <p class="section__sub">Most vocabulary apps want your data, your money every month, and your internet connection. FlexLex doesn't.</p>
+
+      <div class="why__grid">
+        <div class="why__card">
+          <div class="why__icon why__icon--green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Your Data Stays Yours</h3>
+          <p>No account. No cloud. No tracking. Everything lives on your device — we never see your words, your progress, or anything else.</p>
+        </div>
+
+        <div class="why__card">
+          <div class="why__icon why__icon--blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+          </div>
+          <h3>Pay Once, Own It Forever</h3>
+          <p>No monthly subscriptions draining your wallet. One payment, all features unlocked permanently — including every future update.</p>
+        </div>
+
+        <div class="why__card">
+          <div class="why__icon why__icon--purple">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <h3>Science-Backed Learning</h3>
+          <p>Spaced repetition isn't a gimmick — it's proven by decades of cognitive science research. FlexLex uses the SM-2 algorithm to schedule your reviews at the perfect moment.</p>
+        </div>
+
+        <div class="why__card">
+          <div class="why__icon why__icon--orange">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+          </div>
+          <h3>8 Modes, Not Just Flashcards</h3>
+          <p>Most apps give you one way to study. FlexLex gives you eight — from active recall writing to speed challenges — so you never hit a plateau.</p>
+        </div>
+
+        <div class="why__card">
+          <div class="why__icon why__icon--teal">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M5 12.55a11 11 0 0114.08 0M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0M12 20h.01"/></svg>
+          </div>
+          <h3>Works Without Internet</h3>
+          <p>Study on a plane, on a train, in the middle of nowhere. FlexLex works 100% offline — no Wi-Fi, no mobile data, no problem.</p>
+        </div>
+
+        <div class="why__card">
+          <div class="why__icon why__icon--pink">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          </div>
+          <h3>Zero Ads, Zero Distractions</h3>
+          <p>No banners. No video ads between study sessions. No "watch this ad to continue." Just you and your words, every single time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="section pricing" id="pricing">
+    <div class="container">
+      <div class="section-label">Pricing</div>
+      <h2 class="section__title">Simple, Honest <span class="gradient-text">Pricing</span></h2>
+      <p class="section__sub">No subscriptions. No hidden fees. Pay once, own it forever.</p>
+
+      <div class="pricing__grid">
+        <div class="pricing-card">
+          <div class="pricing-card__header">
+            <h3>Free</h3>
+            <div class="pricing-card__price">
+              <span class="pricing-card__amount">$0</span>
+              <span class="pricing-card__period">forever</span>
+            </div>
+            <p class="pricing-card__desc">Try FlexLex and see how it works. Perfect for your first test.</p>
+          </div>
+          <ul class="pricing-card__features">
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              Flashcards &amp; Write Mode
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              Up to 2 Sets (30 words each)
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              Spaced Repetition (SRS)
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              Manual Word Entry
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              Dark &amp; Light Themes
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              Fully Offline
+            </li>
+          </ul>
+          <a href="#download" class="btn btn--glass btn--lg pricing-card__btn">Get Started Free</a>
+        </div>
+
+        <div class="pricing-card pricing-card--pro">
+          <div class="pricing-card__badge">Best Value</div>
+          <div class="pricing-card__header">
+            <h3>Pro</h3>
+            <div class="pricing-card__price">
+              <span class="pricing-card__amount">$10</span>
+              <span class="pricing-card__period">one-time payment</span>
+            </div>
+            <p class="pricing-card__desc">Unlock everything. Pay once, keep it forever. No subscriptions.</p>
+          </div>
+          <ul class="pricing-card__features">
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              All 8 Study Modes
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              Unlimited Sets &amp; Words
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              Excel/Text Import &amp; OCR Scanner
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              Bulk Create Words
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              Translation Suggestions &amp; Spell Check
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              Article Color Coding
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              Full Statistics &amp; Progress Tracking
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              All Future Updates
+            </li>
+          </ul>
+          <a href="#download" class="btn btn--primary btn--lg pricing-card__btn">Get Pro — $10</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section faq" id="faq">
+    <div class="container">
+      <div class="section-label">FAQ</div>
+      <h2 class="section__title">Got <span class="gradient-text">Questions?</span></h2>
+      <p class="section__sub">Everything you need to know about FlexLex.</p>
+
+      <div class="faq__list">
+        <details class="faq__item">
+          <summary class="faq__question">
+            <span>Is FlexLex really free?</span>
+            <svg class="faq__chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="faq__answer">
+            <p>Yes. The free version includes flashcards, write mode, spaced repetition, up to 2 sets with 30 words each, and full offline support. No account required, no ads. The Pro upgrade ($10, one-time) unlocks all 8 study modes, unlimited sets and words, import tools, translation suggestions, spell check, and much more.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__question">
+            <span>Does it work without internet?</span>
+            <svg class="faq__chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="faq__answer">
+            <p>100%. FlexLex stores everything locally on your device. No cloud sync, no server dependency. Your data stays on your phone, always available, even on a plane or in a remote area.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__question">
+            <span>What languages does FlexLex support?</span>
+            <svg class="faq__chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="faq__answer">
+            <p>FlexLex is language-agnostic. You create your own word pairs, so it works with any language combination — English-Japanese, Spanish-French, or even technical terminology. The built-in dictionary suggestions cover dozens of popular languages.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__question">
+            <span>How does spaced repetition work?</span>
+            <svg class="faq__chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="faq__answer">
+            <p>Every time you review a word, FlexLex records whether you knew it, found it hard, or didn't know it. Based on your answers, it calculates the optimal time to show that word again — right before you'd forget it. Words you struggle with appear more frequently; words you know well are spaced further apart.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__question">
+            <span>Can I import my existing word lists?</span>
+            <svg class="faq__chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="faq__answer">
+            <p>Yes. FlexLex supports importing from Excel (.xlsx) files and plain text files. You can also use the OCR camera scanner (Pro) to photograph printed word lists, textbook pages, or whiteboards and convert them to flashcards instantly.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__question">
+            <span>Is there a subscription?</span>
+            <svg class="faq__chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="faq__answer">
+            <p>No. FlexLex Pro is a one-time $10 purchase. You pay once and get every feature, including all future updates. No recurring charges, ever.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEEDBACK -->
+  <section class="section feedback" id="feedback">
+    <div class="container">
+      <div class="section-label">Feedback</div>
+      <h2 class="section__title">Got an Idea?<br><span class="gradient-text">We're Listening.</span></h2>
+      <p class="section__sub">Help us make FlexLex better. Share your suggestions, feature requests, or anything on your mind.</p>
+
+      <form class="feedback__form" action="https://formsubmit.co/support@flexlex.app" method="POST">
+        <!-- FormSubmit config -->
+        <input type="hidden" name="_subject" value="FlexLex Feedback from Website">
+        <input type="hidden" name="_captcha" value="true">
+        <input type="hidden" name="_next" value="https://flexlex.app#feedback">
+        <input type="text" name="_honey" style="display:none">
+
+        <div class="feedback__row">
+          <div class="feedback__field">
+            <label for="feedback-name">Name</label>
+            <input type="text" id="feedback-name" name="name" placeholder="Your name" required>
+          </div>
+          <div class="feedback__field">
+            <label for="feedback-email">Email</label>
+            <input type="email" id="feedback-email" name="email" placeholder="you@example.com" required>
+          </div>
+        </div>
+        <div class="feedback__field">
+          <label for="feedback-message">Your Idea</label>
+          <textarea id="feedback-message" name="message" rows="5" placeholder="What would make FlexLex better for you?" required></textarea>
+        </div>
+        <button type="submit" class="btn btn--primary btn--lg feedback__submit">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+          Send Feedback
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- CTA / DOWNLOAD -->
+  <section class="section cta" id="download">
+    <div class="container cta__inner">
+      <div class="cta__glow"></div>
+      <div class="section-label section-label--light">Download</div>
+      <h2>Start Learning<br><span class="gradient-text">Today</span></h2>
+      <p>Free. No account. No internet required. Just download and start.</p>
+      <div class="cta__buttons">
+        <a href="#" class="store-badge">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28"><path d="M17.523 2c.095 1.092-.318 2.17-1.028 2.943-.72.783-1.876 1.382-3.012 1.302-.112-1.065.373-2.178 1.058-2.87C15.28 2.6 16.522 2.05 17.523 2zM20.485 17.5c-.537 1.09-.793 1.577-1.484 2.538-.964 1.34-2.323 3.007-4.01 3.023-1.498.014-1.884-.977-3.92-.964-2.035.013-2.46.983-3.96.968-1.686-.016-2.97-1.513-3.934-2.853C1.2 17.39.635 13.462 2.15 11.32c1.076-1.524 2.778-2.42 4.37-2.42 1.625 0 2.645.983 3.987.983 1.302 0 2.095-.985 3.972-.985 1.418 0 2.92.773 3.993 2.107-3.505 1.923-2.94 6.932.013 8.495z"/></svg>
+          <div>
+            <small>Download on the</small>
+            <strong>App Store</strong>
+          </div>
+        </a>
+        <a href="#" class="store-badge">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28"><path d="M3.61 1.814L13.793 12 3.61 22.186a.996.996 0 01-.61-.92V2.734c0-.382.218-.726.61-.92zm.84-.408L15.674 7.7l-2.846 2.846L4.45 1.406zm.84 21.188L15.674 16.3l-2.846-2.846L4.45 22.594zm12.524-8.194l2.79 1.612c.48.278.48.972 0 1.25l-2.79 1.612-3.12-3.12 3.12-3.354z"/></svg>
+          <div>
+            <small>Get it on</small>
+            <strong>Google Play</strong>
+          </div>
+        </a>
+      </div>
+      <p class="cta__note">Coming soon to app stores</p>
+      <div class="cta__platforms">
+        <span>Android 8+</span>
+        <span class="cta__dot"></span>
+        <span>iOS 13+</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="#" class="nav__logo"><img src="FL-logo.png" alt="FlexLex" class="logo-icon"> FlexLex</a>
+        <p>Master vocabulary your way.</p>
+      </div>
+      <div class="footer__columns">
+        <div class="footer__col">
+          <h4>Product</h4>
+          <a href="#features">Features</a>
+          <a href="#modes">Study Modes</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#download">Download</a>
+        </div>
+        <div class="footer__col">
+          <h4>Support</h4>
+          <a href="#faq">FAQ</a>
+          <a href="mailto:support@flexlex.app">Contact Us</a>
+        </div>
+        <div class="footer__col">
+          <h4>Legal</h4>
+          <a href="https://ondra001.github.io/legal-docs/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a>
+          <a href="https://ondra001.github.io/legal-docs/terms-of-service" target="_blank" rel="noopener">Terms of Service</a>
+        </div>
+      </div>
+      <div class="footer__copy">
+        &copy; 2026 FlexLex. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <!-- BACK TO TOP -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+
+  <script src="script.js"></script>
+</body>
+</html>
