@@ -1103,10 +1103,16 @@ img { max-width: 100%; display: block; }
   padding: 0;
   transition: all 0.25s;
 }
-.store-badge img {
-  height: 48px;
+.store-badge--apple img {
+  height: 44px;
   width: auto;
   display: block;
+}
+.store-badge--google img {
+  height: 64px;
+  width: auto;
+  display: block;
+  margin: -10px 0;
 }
 .store-badge:hover {
   transform: translateY(-2px);
