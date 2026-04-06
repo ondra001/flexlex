@@ -818,9 +818,9 @@ img { max-width: 100%; display: block; }
 .pricing { z-index: 1; }
 .pricing__grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
-  max-width: 780px;
+  max-width: 1080px;
   margin: 0 auto;
 }
 .pricing-card {
@@ -852,6 +852,14 @@ img { max-width: 100%; display: block; }
 .pricing-card--pro:hover {
   border-color: rgba(94,163,248,0.35);
   box-shadow: 0 12px 40px rgba(0,0,0,0.25), 0 0 80px rgba(94,163,248,0.1);
+}
+.pricing-card--lifetime {
+  background: var(--surface);
+  border-color: rgba(160,124,236,0.2);
+}
+.pricing-card--lifetime:hover {
+  border-color: rgba(160,124,236,0.35);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.25), 0 0 60px rgba(160,124,236,0.08);
 }
 .pricing-card__badge {
   position: absolute;
@@ -1240,6 +1248,11 @@ img { max-width: 100%; display: block; }
   .footer__columns { display: contents; }
 }
 
+@media (max-width: 960px) {
+  .pricing__grid { grid-template-columns: 1fr 1fr; max-width: 780px; }
+  .pricing-card--lifetime { grid-column: 1 / -1; max-width: 420px; margin: 0 auto; }
+}
+
 @media (max-width: 768px) {
   .section { padding: 80px 0; }
   .hero { padding: 130px 0 80px; min-height: auto; }
@@ -1259,6 +1272,7 @@ img { max-width: 100%; display: block; }
   .mode-card--featured, .mode-card--wide { grid-column: span 1; }
   .why__grid { grid-template-columns: 1fr; }
   .pricing__grid { grid-template-columns: 1fr; max-width: 420px; }
+  .pricing-card--lifetime { order: 3; }
   .footer__inner { grid-template-columns: 1fr 1fr; gap: 32px; }
   .footer__brand { grid-column: 1 / -1; }
   .faq__question { padding: 16px 20px; font-size: 0.95rem; }
