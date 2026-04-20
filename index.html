@@ -36,13 +36,18 @@
 </head>
 <body>
 
-  <!-- GLOW ORBS (background decoration) -->
-  <div class="glow glow--1"></div>
-  <div class="glow glow--2"></div>
-  <div class="glow glow--3"></div>
+  <!-- AURORA BACKGROUND -->
+  <div class="aurora" aria-hidden="true">
+    <div class="aurora__blob aurora__blob--1"></div>
+    <div class="aurora__blob aurora__blob--2"></div>
+    <div class="aurora__blob aurora__blob--3"></div>
+    <div class="aurora__blob aurora__blob--4"></div>
+  </div>
+  <div class="noise-overlay" aria-hidden="true"></div>
 
   <!-- NAV -->
   <nav class="nav" id="nav">
+    <div class="nav__progress" id="navProgress"></div>
     <div class="container nav__inner">
       <a href="#" class="nav__logo">
         <img src="FL-logo.png" alt="FlexLex" class="logo-icon">
@@ -63,6 +68,7 @@
 
   <!-- HERO -->
   <header class="hero" id="hero">
+    <div class="hero__spotlight" id="heroSpotlight" aria-hidden="true"></div>
     <div class="container hero__inner">
       <div class="hero__text">
         <div class="hero__badge">Vocabulary Learning, Reimagined</div>
@@ -103,23 +109,23 @@
           </div>
         </div>
       </div>
-      <div class="hero__visual">
-        <div class="phone-mockup">
+      <div class="hero__visual" id="heroVisual">
+        <div class="phone-mockup" id="phoneMockup">
           <div class="phone-notch"></div>
           <div class="phone-screen">
             <div class="demo-header">
-              <span class="demo-set-name">German Basics</span>
+              <span class="demo-set-name" id="demoSetName">German Basics</span>
               <span class="demo-counter">4 / 20</span>
             </div>
             <div class="demo-card" id="demoCard">
               <div class="demo-card__front">
                 <div class="demo-card__label">Word</div>
-                <div class="demo-card__word">Schmetterling</div>
+                <div class="demo-card__word" id="demoWord">Schmetterling</div>
                 <div class="demo-card__hint">Tap to flip</div>
               </div>
               <div class="demo-card__back">
                 <div class="demo-card__label">Translation</div>
-                <div class="demo-card__word demo-card__word--answer">Butterfly</div>
+                <div class="demo-card__word demo-card__word--answer" id="demoTranslation">Butterfly</div>
                 <div class="demo-card__hint">Tap to flip</div>
               </div>
             </div>
@@ -253,36 +259,68 @@
       <div class="section-label">How It Works</div>
       <h2 class="section__title">From Zero to Fluent<br><span class="gradient-text">in 4 Simple Steps</span></h2>
 
-      <div class="steps">
-        <div class="step">
-          <div class="step__number">01</div>
-          <div class="step__content">
-            <h3>Create or Import</h3>
+      <div class="timeline">
+        <div class="timeline__rail">
+          <div class="timeline__rail-fill" id="timelineFill"></div>
+        </div>
+
+        <div class="timeline__step timeline__step--left">
+          <div class="timeline__node">
+            <span>01</span>
+          </div>
+          <div class="timeline__card">
+            <div class="timeline__head">
+              <div class="timeline__icon timeline__icon--blue">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+              </div>
+              <h3>Create or Import</h3>
+            </div>
             <p>Add words manually, scan them with your camera, or load an Excel file. Build your vocabulary library in seconds.</p>
           </div>
         </div>
-        <div class="step__connector"></div>
-        <div class="step">
-          <div class="step__number">02</div>
-          <div class="step__content">
-            <h3>Choose Your Mode</h3>
-            <p>Flashcards for quick review. Write mode for active recall. Match game for fun. Pick what fits your mood and available time.</p>
+
+        <div class="timeline__step timeline__step--right">
+          <div class="timeline__node">
+            <span>02</span>
+          </div>
+          <div class="timeline__card">
+            <div class="timeline__head">
+              <div class="timeline__icon timeline__icon--purple">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+              </div>
+              <h3>Choose Your Mode</h3>
+            </div>
+            <p>Flashcards for quick review. Write mode for active recall. Match game for fun. Pick what fits your mood and your time.</p>
           </div>
         </div>
-        <div class="step__connector"></div>
-        <div class="step">
-          <div class="step__number">03</div>
-          <div class="step__content">
-            <h3>Study &amp; Get Feedback</h3>
-            <p>Every answer is tracked. Words are automatically categorized as Know, Don't Know, or Hard. The SRS algorithm adjusts your review schedule in real time.</p>
+
+        <div class="timeline__step timeline__step--left">
+          <div class="timeline__node">
+            <span>03</span>
+          </div>
+          <div class="timeline__card">
+            <div class="timeline__head">
+              <div class="timeline__icon timeline__icon--teal">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+              </div>
+              <h3>Study &amp; Get Feedback</h3>
+            </div>
+            <p>Every answer is tracked. Words are categorized as Know, Don't Know, or Hard. The SRS algorithm adjusts your schedule in real time.</p>
           </div>
         </div>
-        <div class="step__connector"></div>
-        <div class="step">
-          <div class="step__number">04</div>
-          <div class="step__content">
-            <h3>Watch Your Progress</h3>
-            <p>Track daily streaks, accuracy rates, and mastery levels. See words move from "Don't Know" to "Know" as your vocabulary grows.</p>
+
+        <div class="timeline__step timeline__step--right">
+          <div class="timeline__node">
+            <span>04</span>
+          </div>
+          <div class="timeline__card">
+            <div class="timeline__head">
+              <div class="timeline__icon timeline__icon--green">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg>
+              </div>
+              <h3>Watch Your Progress</h3>
+            </div>
+            <p>Daily streaks, accuracy rates, mastery levels. See words move from "Don't Know" to "Know" as your vocabulary grows.</p>
           </div>
         </div>
       </div>
@@ -296,88 +334,103 @@
       <h2 class="section__title">8 Ways to Learn.<br><span class="gradient-text">One App.</span></h2>
       <p class="section__sub">Different modes activate different parts of your memory. Mix them for maximum retention.</p>
 
-      <div class="modes__grid">
-        <div class="mode-card mode-card--featured">
-          <div class="mode-card__glow"></div>
-          <div class="mode-card__number">01</div>
-          <h3>Flashcards</h3>
-          <p>The classic. Swipe through cards, mark what you know and what you don't. Flip to reveal. Simple, fast, effective.</p>
-          <div class="mode-card__tags">
-            <span>Swipe gestures</span>
-            <span>Flip animation</span>
-            <span>SRS integrated</span>
-          </div>
-        </div>
-
-        <div class="mode-card">
-          <div class="mode-card__number">02</div>
-          <h3>Write Mode</h3>
-          <p>See the word, type the translation from memory. No guessing from options. Pure active recall.</p>
-          <div class="mode-card__tags">
-            <span>Active recall</span>
-            <span>Instant feedback</span>
-          </div>
-        </div>
-
-        <div class="mode-card">
-          <div class="mode-card__number">03</div>
-          <h3>Spell Mode</h3>
-          <p>Hear the pronunciation, spell it out letter by letter. Perfect for tricky words and new alphabets.</p>
-          <div class="mode-card__tags">
-            <span>Audio cues</span>
-            <span>Letter precision</span>
-          </div>
-        </div>
-
-        <div class="mode-card">
-          <div class="mode-card__number">04</div>
-          <h3>Multiple Choice</h3>
-          <p>Pick the right answer from 4 to 8 options. Quick rounds for reinforcement between longer study sessions.</p>
-          <div class="mode-card__tags">
-            <span>4-8 options</span>
-            <span>Quick rounds</span>
-          </div>
-        </div>
-
-        <div class="mode-card">
-          <div class="mode-card__number">05</div>
-          <h3>Test Mode</h3>
-          <p>Mixed question types in a timed session. The closest thing to a real exam. See where you truly stand.</p>
-          <div class="mode-card__tags">
-            <span>Mixed types</span>
-            <span>Timed</span>
-          </div>
-        </div>
-
-        <div class="mode-card">
-          <div class="mode-card__number">06</div>
-          <h3>Match Game</h3>
-          <p>Pair words with translations against the clock. Competitive, fast, and surprisingly addictive.</p>
-          <div class="mode-card__tags">
-            <span>Time attack</span>
-            <span>Pair matching</span>
-          </div>
-        </div>
-
-        <div class="mode-card">
-          <div class="mode-card__number">07</div>
-          <h3>Rush Game</h3>
-          <p>How many can you get right before time runs out? Push your limits and beat your own high score.</p>
-          <div class="mode-card__tags">
-            <span>Speed challenge</span>
-            <span>High scores</span>
-          </div>
-        </div>
-
-        <div class="mode-card mode-card--wide">
-          <div class="mode-card__number">08</div>
+      <!-- FEATURED HERO: Learn Mode -->
+      <div class="modes__featured">
+        <div class="modes__featured-glow"></div>
+        <div class="modes__featured-copy">
+          <span class="modes__featured-label">Flagship Mode · SRS powered</span>
           <h3>Learn Mode</h3>
-          <p>A guided session that teaches you new words step by step. The SRS algorithm picks what you need to learn next and schedules reviews at the perfect time.</p>
-          <div class="mode-card__tags">
-            <span>Guided learning</span>
-            <span>SRS powered</span>
-            <span>Adaptive difficulty</span>
+          <p>A guided session that teaches you new words step by step. The SRS algorithm picks what you need to learn next and schedules reviews at the perfect time — so you never waste a study minute.</p>
+          <div class="modes__featured-stats">
+            <div><strong>Adaptive</strong><span>Difficulty</span></div>
+            <div class="modes__featured-divider"></div>
+            <div><strong>Real-time</strong><span>Feedback</span></div>
+            <div class="modes__featured-divider"></div>
+            <div><strong>Zero-setup</strong><span>SRS</span></div>
           </div>
+        </div>
+        <div class="modes__featured-visual">
+          <div class="learn-demo">
+            <div class="learn-demo__header">
+              <span class="learn-demo__round">Round 3</span>
+              <div class="learn-demo__bar">
+                <div class="learn-demo__bar-fill"></div>
+              </div>
+              <span class="learn-demo__count">12 / 20</span>
+            </div>
+            <div class="learn-demo__prompt">Translate</div>
+            <div class="learn-demo__word">Bibliothek</div>
+            <div class="learn-demo__options">
+              <button class="learn-demo__opt">Library</button>
+              <button class="learn-demo__opt learn-demo__opt--wrong">Bookstore</button>
+              <button class="learn-demo__opt">Archive</button>
+              <button class="learn-demo__opt">Museum</button>
+            </div>
+            <div class="learn-demo__footer">
+              <span class="learn-demo__streak">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                5 in a row
+              </span>
+              <span class="learn-demo__next">Next in 0.5s</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OTHER MODES: horizontal scroll rail -->
+      <div class="modes__rail-head">
+        <h4>Plus 7 more ways to drill</h4>
+        <div class="modes__rail-arrows">
+          <button class="modes__rail-arrow" data-dir="-1" aria-label="Scroll modes left">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <button class="modes__rail-arrow" data-dir="1" aria-label="Scroll modes right">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="modes__rail" id="modesRail">
+        <div class="mode-mini">
+          <div class="mode-mini__num">01</div>
+          <h4>Flashcards</h4>
+          <p>Swipe through cards, mark what you know. Flip to reveal.</p>
+          <div class="mode-mini__tags"><span>Swipe</span><span>Flip</span></div>
+        </div>
+        <div class="mode-mini">
+          <div class="mode-mini__num">02</div>
+          <h4>Write Mode</h4>
+          <p>Type the translation from memory — pure active recall.</p>
+          <div class="mode-mini__tags"><span>Active recall</span></div>
+        </div>
+        <div class="mode-mini">
+          <div class="mode-mini__num">03</div>
+          <h4>Spell Mode</h4>
+          <p>Hear the pronunciation, spell it letter by letter.</p>
+          <div class="mode-mini__tags"><span>Audio</span></div>
+        </div>
+        <div class="mode-mini">
+          <div class="mode-mini__num">04</div>
+          <h4>Multiple Choice</h4>
+          <p>Pick from 4 to 8 options. Quick, reinforcing rounds.</p>
+          <div class="mode-mini__tags"><span>4-8 options</span></div>
+        </div>
+        <div class="mode-mini">
+          <div class="mode-mini__num">05</div>
+          <h4>Test Mode</h4>
+          <p>Mixed question types, timed. Closest thing to a real exam.</p>
+          <div class="mode-mini__tags"><span>Timed</span><span>Mixed</span></div>
+        </div>
+        <div class="mode-mini">
+          <div class="mode-mini__num">06</div>
+          <h4>Match Game</h4>
+          <p>Pair words with translations against the clock.</p>
+          <div class="mode-mini__tags"><span>Time attack</span></div>
+        </div>
+        <div class="mode-mini">
+          <div class="mode-mini__num">07</div>
+          <h4>Rush Game</h4>
+          <p>How many can you get right before time runs out?</p>
+          <div class="mode-mini__tags"><span>Speed</span><span>High scores</span></div>
         </div>
       </div>
     </div>
@@ -385,59 +438,149 @@
 
   <!-- WHY FLEXLEX -->
   <section class="section why" id="why">
+    <div class="why__bg-glow why__bg-glow--a"></div>
+    <div class="why__bg-glow why__bg-glow--b"></div>
     <div class="container">
       <div class="section-label">Why FlexLex</div>
       <h2 class="section__title">Built Different.<br><span class="gradient-text">On Purpose.</span></h2>
       <p class="section__sub">Most vocabulary apps want your data, your money every month, and your internet connection. FlexLex doesn't.</p>
 
-      <div class="why__grid">
-        <div class="why__card">
-          <div class="why__icon why__icon--green">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <div class="why__rows">
+
+        <!-- ROW 1: privacy -->
+        <div class="why__row">
+          <div class="why__text">
+            <div class="why__eyebrow why__eyebrow--green">Privacy First</div>
+            <h3>Your data stays <span class="why__hl why__hl--green">on your device</span>.</h3>
+            <p>No account. No cloud. No tracking. Your words, your streaks, your progress — all live entirely on your phone. We literally cannot see them, because there's nothing to see.</p>
+            <ul class="why__bullets">
+              <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg> No sign-up required</li>
+              <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg> No analytics SDKs</li>
+              <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg> No third-party trackers</li>
+            </ul>
           </div>
-          <h3>Your Data Stays Yours</h3>
-          <p>No account. No cloud. No tracking. Everything lives on your device — we never see your words, your progress, or anything else.</p>
+          <div class="why__visual">
+            <div class="privacy-visual">
+              <div class="privacy-visual__shield">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+              </div>
+              <div class="privacy-visual__pulse"></div>
+              <div class="privacy-visual__ping privacy-visual__ping--1">
+                <span>ACCOUNT</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6L6 18M6 6l12 12"/></svg>
+              </div>
+              <div class="privacy-visual__ping privacy-visual__ping--2">
+                <span>CLOUD</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6L6 18M6 6l12 12"/></svg>
+              </div>
+              <div class="privacy-visual__ping privacy-visual__ping--3">
+                <span>TRACKERS</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6L6 18M6 6l12 12"/></svg>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div class="why__card">
-          <div class="why__icon why__icon--blue">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+        <!-- ROW 2: modes -->
+        <div class="why__row why__row--reverse">
+          <div class="why__text">
+            <div class="why__eyebrow why__eyebrow--orange">8 Study Modes</div>
+            <h3>One app. <span class="why__hl why__hl--orange">Eight ways</span> to learn.</h3>
+            <p>Most apps give you flashcards and call it done. FlexLex gives you eight distinct modes — each one activates a different part of your memory, so you never hit a plateau.</p>
+            <ul class="why__bullets">
+              <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg> Passive &amp; active recall</li>
+              <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg> Timed &amp; untimed</li>
+              <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg> Rewards &amp; streaks</li>
+            </ul>
           </div>
-          <h3>Affordable &amp; Flexible</h3>
-          <p>Just $15/year for full access, or $120 once to own it forever. No hidden fees, no ads — just learning.</p>
+          <div class="why__visual">
+            <div class="modes-visual">
+              <div class="modes-visual__pill modes-visual__pill--1"><span class="modes-visual__dot" style="background:var(--blue)"></span>Flashcards</div>
+              <div class="modes-visual__pill modes-visual__pill--2"><span class="modes-visual__dot" style="background:var(--purple)"></span>Write</div>
+              <div class="modes-visual__pill modes-visual__pill--3"><span class="modes-visual__dot" style="background:var(--teal)"></span>Spell</div>
+              <div class="modes-visual__pill modes-visual__pill--4"><span class="modes-visual__dot" style="background:var(--green)"></span>Multiple Choice</div>
+              <div class="modes-visual__pill modes-visual__pill--5"><span class="modes-visual__dot" style="background:var(--orange)"></span>Test</div>
+              <div class="modes-visual__pill modes-visual__pill--6"><span class="modes-visual__dot" style="background:var(--pink)"></span>Match</div>
+              <div class="modes-visual__pill modes-visual__pill--7"><span class="modes-visual__dot" style="background:var(--red)"></span>Rush</div>
+              <div class="modes-visual__pill modes-visual__pill--featured">
+                <span class="modes-visual__dot" style="background:linear-gradient(135deg,var(--blue),var(--purple))"></span>
+                Learn Mode
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div class="why__card">
-          <div class="why__icon why__icon--purple">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        <!-- ROW 3: SRS science -->
+        <div class="why__row">
+          <div class="why__text">
+            <div class="why__eyebrow why__eyebrow--purple">Science-Backed</div>
+            <h3>Remember every word at the <span class="why__hl why__hl--purple">perfect moment</span>.</h3>
+            <p>Spaced repetition isn't a gimmick — it's decades of cognitive science. FlexLex uses the SM-2 algorithm to schedule reviews right before you'd forget. Words you struggle with appear more often. Words you've mastered fade into the background.</p>
+            <ul class="why__bullets">
+              <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg> Adaptive SM-2 algorithm</li>
+              <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg> Works in every mode</li>
+              <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg> No manual tagging</li>
+            </ul>
           </div>
-          <h3>Science-Backed Learning</h3>
-          <p>Spaced repetition isn't a gimmick — it's proven by decades of cognitive science research. FlexLex uses the SM-2 algorithm to schedule your reviews at the perfect moment.</p>
+          <div class="why__visual">
+            <div class="curve-visual">
+              <svg viewBox="0 0 320 200" preserveAspectRatio="none" class="curve-visual__svg">
+                <defs>
+                  <linearGradient id="curveGrad" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stop-color="rgba(160,124,236,0.5)"/>
+                    <stop offset="100%" stop-color="rgba(160,124,236,0)"/>
+                  </linearGradient>
+                </defs>
+                <!-- grid -->
+                <line x1="0" y1="40" x2="320" y2="40" stroke="rgba(255,255,255,0.04)"/>
+                <line x1="0" y1="100" x2="320" y2="100" stroke="rgba(255,255,255,0.04)"/>
+                <line x1="0" y1="160" x2="320" y2="160" stroke="rgba(255,255,255,0.04)"/>
+                <!-- forgetting curve (decays) -->
+                <path d="M 0 20 Q 40 140 160 170 T 320 185" stroke="rgba(240,96,96,0.55)" stroke-width="2" fill="none" stroke-dasharray="4 4"/>
+                <!-- SRS curve (saw-tooth: climbs on review) -->
+                <path d="M 0 20 L 60 140 L 60 40 L 140 150 L 140 30 L 230 160 L 230 22 L 320 170" stroke="url(#curveGrad)" stroke-width="3" fill="none"/>
+                <!-- review dots -->
+                <circle cx="60" cy="40" r="5" fill="var(--purple)"/>
+                <circle cx="140" cy="30" r="5" fill="var(--purple)"/>
+                <circle cx="230" cy="22" r="5" fill="var(--purple)"/>
+              </svg>
+              <div class="curve-visual__legend">
+                <span class="curve-visual__tag"><span class="curve-visual__swatch curve-visual__swatch--red"></span>Forgetting</span>
+                <span class="curve-visual__tag"><span class="curve-visual__swatch curve-visual__swatch--purple"></span>With SRS</span>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div class="why__card">
-          <div class="why__icon why__icon--orange">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+        <!-- ROW 4: affordable -->
+        <div class="why__row why__row--reverse">
+          <div class="why__text">
+            <div class="why__eyebrow why__eyebrow--blue">Honest Pricing</div>
+            <h3>Pay <span class="why__hl why__hl--blue">once or yearly</span>. Never both.</h3>
+            <p>No auto-renewing traps. No "upgrade to remove ads" because there are no ads. $15/year to subscribe, or $120 once to own it forever — your choice.</p>
+            <ul class="why__bullets">
+              <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg> 30-day free trial of Pro</li>
+              <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg> No hidden fees</li>
+              <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg> Cancel anytime</li>
+            </ul>
           </div>
-          <h3>8 Modes, Not Just Flashcards</h3>
-          <p>Most apps give you one way to study. FlexLex gives you eight — from active recall writing to speed challenges — so you never hit a plateau.</p>
+          <div class="why__visual">
+            <div class="price-visual">
+              <div class="price-visual__card price-visual__card--yr">
+                <span class="price-visual__label">Yearly</span>
+                <span class="price-visual__amount">$15<em>/yr</em></span>
+                <span class="price-visual__note">Cancel anytime</span>
+              </div>
+              <div class="price-visual__or">or</div>
+              <div class="price-visual__card price-visual__card--lt">
+                <span class="price-visual__label">Lifetime</span>
+                <span class="price-visual__amount">$120<em>once</em></span>
+                <span class="price-visual__note">Forever yours</span>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div class="why__card">
-          <div class="why__icon why__icon--teal">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M5 12.55a11 11 0 0114.08 0M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0M12 20h.01"/></svg>
-          </div>
-          <h3>Works Without Internet</h3>
-          <p>Study on a plane, on a train, in the middle of nowhere. FlexLex works 100% offline — no Wi-Fi, no mobile data, no problem.</p>
-        </div>
-
-        <div class="why__card">
-          <div class="why__icon why__icon--pink">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-          </div>
-          <h3>Zero Ads, Zero Distractions</h3>
-          <p>No banners. No video ads between study sessions. No "watch this ad to continue." Just you and your words, every single time.</p>
-        </div>
       </div>
     </div>
   </section>
