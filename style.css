@@ -47,7 +47,7 @@ img { max-width: 100%; display: block; }
 
 /* ── UTILITIES ── */
 .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
-.section { padding: 120px 0; position: relative; }
+.section { padding: 80px 0; position: relative; }
 .section__title {
   font-size: clamp(2rem, 4.5vw, 3rem);
   font-weight: 800;
@@ -61,7 +61,7 @@ img { max-width: 100%; display: block; }
   color: var(--text-dim);
   font-size: 1.1rem;
   max-width: 520px;
-  margin: 0 auto 64px;
+  margin: 0 auto 44px;
   line-height: 1.7;
 }
 .section-label {
@@ -216,7 +216,7 @@ img { max-width: 100%; display: block; }
 /* ── HERO ── */
 .hero {
   position: relative;
-  padding: 160px 0 120px;
+  padding: 140px 0 80px;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -1321,8 +1321,8 @@ img { max-width: 100%; display: block; }
 }
 
 @media (max-width: 768px) {
-  .section { padding: 80px 0; }
-  .hero { padding: 130px 0 80px; min-height: auto; }
+  .section { padding: 56px 0; }
+  .hero { padding: 110px 0 56px; min-height: auto; }
   .hero__inner { grid-template-columns: 1fr; gap: 60px; text-align: center; }
   .hero__sub { margin-left: auto; margin-right: auto; }
   .hero__actions { justify-content: center; }
