@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create a set · FlexLex</title>
+  <link rel="icon" href="../favicon.ico" />
+  <meta name="description" content="Build a vocabulary set in your browser and share it to FlexLex with one link — no account, no upload." />
+  <style>
+    :root {
+      --blue: #5ea3f8; --purple: #a07cec; --teal: #3dd6c8; --green: #4ad66d;
+      --red: #f06060;
+      --surface: #10121a; --surface-2: #161923; --surface-3: #1c1f2e;
+      --border: rgba(255,255,255,0.08); --text: #e4e6ef; --text-dim: #8a8fa8;
+      --radius: 20px; --radius-sm: 12px; --radius-xs: 8px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--surface); color: var(--text);
+      min-height: 100vh; padding: 24px; line-height: 1.5;
+    }
+    .wrap { width: 100%; max-width: 720px; margin: 0 auto; }
+    .brand {
+      font-weight: 800; letter-spacing: -0.5px; font-size: 1.4rem;
+      display: inline-block; text-decoration: none; margin-bottom: 8px;
+      background: linear-gradient(90deg, var(--blue), var(--purple), var(--teal));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    h1 { font-size: clamp(1.6rem, 4vw, 2.2rem); letter-spacing: -0.5px; margin-bottom: 6px; }
+    .lead { color: var(--text-dim); margin-bottom: 24px; }
+    .card {
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px; margin-bottom: 16px;
+    }
+    label { display: block; font-size: 0.85rem; color: var(--text-dim); margin-bottom: 6px; }
+    input[type="text"] {
+      width: 100%; padding: 11px 13px; border-radius: var(--radius-xs);
+      background: var(--surface-3); border: 1px solid var(--border);
+      color: var(--text); font-size: 1rem; font-family: inherit;
+    }
+    input[type="text"]:focus { outline: none; border-color: var(--blue); }
+    .row-langs { display: flex; gap: 12px; margin-top: 14px; }
+    .row-langs > div { flex: 1; }
+    .words-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .words-head h2 { font-size: 1.05rem; }
+    .word-row { display: flex; gap: 8px; margin-bottom: 8px; align-items: center; }
+    .word-row input { flex: 1; }
+    .word-row .num { width: 22px; color: var(--text-dim); font-size: 0.85rem; text-align: right; flex: none; }
+    .icon-btn {
+      flex: none; width: 38px; height: 38px; border-radius: var(--radius-xs);
+      background: var(--surface-3); border: 1px solid var(--border);
+      color: var(--text-dim); cursor: pointer; font-size: 1.1rem; line-height: 1;
+    }
+    .icon-btn:hover { color: var(--red); border-color: var(--red); }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 12px 18px; border-radius: var(--radius-sm); font-weight: 700;
+      font-size: 0.98rem; border: none; cursor: pointer; text-decoration: none;
+      font-family: inherit;
+    }
+    .btn--primary { background: linear-gradient(135deg, var(--blue), var(--purple)); color: #fff; }
+    .btn--primary:disabled { opacity: 0.4; cursor: not-allowed; }
+    .btn--glass { background: var(--surface-3); color: var(--text); border: 1px solid var(--border); }
+    .btn--ghost { background: transparent; color: var(--blue); border: 1px dashed var(--border); width: 100%; }
+    .actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
+    .muted { color: var(--text-dim); font-size: 0.85rem; }
+    .out-link {
+      width: 100%; padding: 12px; border-radius: var(--radius-xs);
+      background: var(--surface-3); border: 1px solid var(--border);
+      color: var(--text); font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.8rem; word-break: break-all; margin-bottom: 12px;
+      max-height: 110px; overflow-y: auto;
+    }
+    .result { display: none; }
+    .result.show { display: block; }
+    .len-note { margin-top: 8px; }
+    .len-note.warn { color: var(--orange, #f5a742); }
+    details { margin-top: 12px; }
+    summary { cursor: pointer; color: var(--blue); font-size: 0.9rem; }
+    textarea {
+      width: 100%; min-height: 120px; margin-top: 10px; padding: 11px 13px;
+      border-radius: var(--radius-xs); background: var(--surface-3);
+      border: 1px solid var(--border); color: var(--text); font-size: 0.95rem;
+      font-family: inherit; resize: vertical;
+    }
+    .error { color: var(--red); margin-top: 10px; font-size: 0.9rem; }
+    a.plain { color: var(--blue); text-decoration: none; }
+    .back { margin-top: 28px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="brand" href="/">FlexLex</a>
+    <h1>Create a set</h1>
+    <p class="lead">Type your words below and get one link. Open it on a phone with
+      FlexLex to import the set — no account, and nothing is uploaded anywhere
+      (the words travel inside the link itself).</p>
+
+    <div class="card">
+      <label for="setName">Set name</label>
+      <input type="text" id="setName" placeholder="e.g. Spanish Basics" autocomplete="off" />
+      <div class="row-langs">
+        <div>
+          <label for="srcLang">From (optional)</label>
+          <input type="text" id="srcLang" placeholder="e.g. English" autocomplete="off" />
+        </div>
+        <div>
+          <label for="tgtLang">To (optional)</label>
+          <input type="text" id="tgtLang" placeholder="e.g. Spanish" autocomplete="off" />
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="words-head">
+        <h2>Words</h2>
+        <span class="muted" id="wordCount">0 words</span>
+      </div>
+      <div id="rows"></div>
+      <button class="btn btn--ghost" id="addRow" type="button">+ Add word</button>
+
+      <details>
+        <summary>Paste a list instead</summary>
+        <p class="muted" style="margin-top:8px">One pair per line. Separate the word and
+          translation with a tab, comma, semicolon, or “ - ”. Example:
+          <em>hello, hola</em></p>
+        <textarea id="bulk" placeholder="hello, hola&#10;goodbye, adiós&#10;thank you, gracias"></textarea>
+        <button class="btn btn--glass" id="bulkAdd" type="button" style="margin-top:10px">Add these</button>
+      </details>
+    </div>
+
+    <button class="btn btn--primary" id="generate" type="button" disabled>Generate share link</button>
+    <div class="error" id="error"></div>
+
+    <div class="card result" id="result">
+      <label>Your share link</label>
+      <div class="out-link" id="outLink"></div>
+      <div class="actions">
+        <button class="btn btn--primary" id="copyBtn" type="button">Copy link</button>
+        <a class="btn btn--glass" id="openBtn" target="_blank" rel="noopener">Open the set</a>
+        <button class="btn btn--glass" id="downloadBtn" type="button">Download file</button>
+      </div>
+      <p class="muted len-note" id="lenNote"></p>
+    </div>
+
+    <p class="back"><a class="plain" href="/">← Back to flexlex.app</a></p>
+  </div>
+
+  <script>
+    // Mirror of duok/lib/features/share/share_link_format.dart (encode side).
+    // Must stay in sync with that file and SHARE_LINK_FORMAT.md.
+    const ENVELOPE = 1;
+    const MAX_WORDS = 5000;
+    const MAX_FIELD = 500;
+
+    const rowsEl = document.getElementById('rows');
+    const wordCountEl = document.getElementById('wordCount');
+    const generateBtn = document.getElementById('generate');
+    const errorEl = document.getElementById('error');
+
+    let rows = [];
+
+    function cap(s) { return s.length > MAX_FIELD ? s.slice(0, MAX_FIELD) : s; }
+
+    function renderRows() {
+      rowsEl.innerHTML = '';
+      rows.forEach((r, i) => {
+        const div = document.createElement('div');
+        div.className = 'word-row';
+        div.innerHTML =
+          `<span class="num">${i + 1}</span>` +
+          `<input type="text" placeholder="word" value="${escAttr(r.word)}" data-i="${i}" data-f="word" autocomplete="off" />` +
+          `<input type="text" placeholder="translation" value="${escAttr(r.translation)}" data-i="${i}" data-f="translation" autocomplete="off" />` +
+          `<button class="icon-btn" data-del="${i}" title="Remove" type="button">×</button>`;
+        rowsEl.appendChild(div);
+      });
+      updateCount();
+    }
+
+    function escAttr(s) { return (s || '').replace(/"/g, '&quot;'); }
+
+    function filledRows() {
+      return rows.filter(r => r.word.trim() || r.translation.trim());
+    }
+
+    function updateCount() {
+      const n = filledRows().length;
+      wordCountEl.textContent = n + (n === 1 ? ' word' : ' words');
+      generateBtn.disabled = n === 0;
+    }
+
+    rowsEl.addEventListener('input', (e) => {
+      const i = e.target.dataset.i, f = e.target.dataset.f;
+      if (i === undefined) return;
+      rows[+i][f] = e.target.value;
+      updateCount();
+    });
+
+    rowsEl.addEventListener('click', (e) => {
+      const del = e.target.dataset.del;
+      if (del === undefined) return;
+      rows.splice(+del, 1);
+      if (rows.length === 0) rows.push({ word: '', translation: '' });
+      renderRows();
+    });
+
+    document.getElementById('addRow').addEventListener('click', () => {
+      rows.push({ word: '', translation: '' });
+      renderRows();
+      const inputs = rowsEl.querySelectorAll('input');
+      if (inputs.length) inputs[inputs.length - 2].focus();
+    });
+
+    document.getElementById('bulkAdd').addEventListener('click', () => {
+      const text = document.getElementById('bulk').value;
+      const parsed = parseBulk(text);
+      if (!parsed.length) return;
+      // Drop the trailing empty row if present, then append.
+      rows = filledRows();
+      parsed.forEach(p => rows.push(p));
+      document.getElementById('bulk').value = '';
+      renderRows();
+    });
+
+    function parseBulk(text) {
+      const out = [];
+      for (const raw of text.split('\n')) {
+        const line = raw.trim();
+        if (!line) continue;
+        let sep = null;
+        if (line.includes('\t')) sep = '\t';
+        else if (line.includes(' - ')) sep = ' - ';
+        else if (line.includes(';')) sep = ';';
+        else if (line.includes(',')) sep = ',';
+        if (sep) {
+          const idx = line.indexOf(sep);
+          const word = line.slice(0, idx).trim();
+          const translation = line.slice(idx + sep.length).trim();
+          if (word || translation) out.push({ word: cap(word), translation: cap(translation) });
+        } else {
+          out.push({ word: cap(line), translation: '' });
+        }
+      }
+      return out;
+    }
+
+    async function encodeSetShareLink(set) {
+      const payload = { name: set.name, src: set.src, tgt: set.tgt };
+      if (set.sa) payload.sa = set.sa;
+      payload.words = set.words.map(p => [p.word, p.translation]);
+      const bytes = new TextEncoder().encode(JSON.stringify(payload));
+      const cs = new CompressionStream('gzip');
+      const stream = new Blob([bytes]).stream().pipeThrough(cs);
+      const gz = new Uint8Array(await new Response(stream).arrayBuffer());
+      let bin = '';
+      for (let i = 0; i < gz.length; i++) bin += String.fromCharCode(gz[i]);
+      const b64 = btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+      return 'https://flexlex.app/s#' + ENVELOPE + '.' + b64;
+    }
+
+    function toFlexlexJson(set) {
+      return {
+        appVersion: 1,
+        type: 'set',
+        folders: [{
+          name: set.name || 'My Set',
+          type: 'set',
+          sourceLanguage: set.src || '',
+          targetLanguage: set.tgt || '',
+          sortArticles: '',
+          words: set.words.map(p => ({ word: p.word, translation: p.translation })),
+        }],
+      };
+    }
+
+    let lastSet = null, lastLink = '';
+
+    document.getElementById('generate').addEventListener('click', async () => {
+      errorEl.textContent = '';
+      const words = filledRows()
+        .map(r => ({ word: cap(r.word.trim()), translation: cap(r.translation.trim()) }))
+        .filter(p => p.word || p.translation)
+        .slice(0, MAX_WORDS);
+      if (!words.length) { errorEl.textContent = 'Add at least one word.'; return; }
+
+      const set = {
+        name: (document.getElementById('setName').value || '').trim() || 'My Set',
+        src: (document.getElementById('srcLang').value || '').trim(),
+        tgt: (document.getElementById('tgtLang').value || '').trim(),
+        words,
+      };
+
+      try {
+        const link = await encodeSetShareLink(set);
+        lastSet = set; lastLink = link;
+        document.getElementById('outLink').textContent = link;
+        document.getElementById('openBtn').href = link;
+        const note = document.getElementById('lenNote');
+        note.textContent = `${words.length} words · link is ${link.length} characters long.`;
+        note.className = 'muted len-note' + (link.length > 4000 ? ' warn' : '');
+        if (link.length > 4000) {
+          note.textContent += ' Very long links can be awkward in some chat apps — consider splitting into smaller sets or using “Download file”.';
+        }
+        document.getElementById('result').classList.add('show');
+        document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } catch (e) {
+        errorEl.textContent = 'Could not build the link in this browser.';
+      }
+    });
+
+    document.getElementById('copyBtn').addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(lastLink);
+        const b = document.getElementById('copyBtn');
+        const t = b.textContent; b.textContent = 'Copied ✓';
+        setTimeout(() => { b.textContent = t; }, 1500);
+      } catch (e) { /* clipboard blocked — user can select manually */ }
+    });
+
+    document.getElementById('downloadBtn').addEventListener('click', () => {
+      if (!lastSet) return;
+      const json = JSON.stringify(toFlexlexJson(lastSet), null, 2);
+      const blob = new Blob([json], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const safe = (lastSet.name || 'my-set').replace(/[^\w\s-]/g, '').trim() || 'my-set';
+      const a = document.createElement('a');
+      a.href = url; a.download = safe + '.flexlex.json';
+      document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+    });
+
+    // Seed three empty rows.
+    rows = [{ word: '', translation: '' }, { word: '', translation: '' }, { word: '', translation: '' }];
+    renderRows();
+  </script>
+</body>
+</html>
