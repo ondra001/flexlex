@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Shared FlexLex set</title>
+  <link rel="icon" href="../favicon.ico" />
+  <style>
+    :root {
+      --blue: #5ea3f8; --purple: #a07cec; --teal: #3dd6c8; --green: #4ad66d;
+      --surface: #10121a; --surface-2: #161923; --surface-3: #1c1f2e;
+      --border: rgba(255,255,255,0.08); --text: #e4e6ef; --text-dim: #8a8fa8;
+      --radius: 20px; --radius-sm: 12px; --radius-xs: 8px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--surface); color: var(--text);
+      min-height: 100vh; padding: 24px; display: flex; justify-content: center;
+    }
+    .wrap { width: 100%; max-width: 640px; }
+    .brand {
+      font-weight: 800; letter-spacing: -0.5px; font-size: 1.4rem;
+      margin-bottom: 24px; display: inline-block;
+      background: linear-gradient(90deg, var(--blue), var(--purple), var(--teal));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .card {
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 24px; margin-bottom: 16px;
+    }
+    .set-name { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px; }
+    .langs { color: var(--text-dim); margin-top: 4px; font-size: 0.95rem; }
+    .count { color: var(--text-dim); margin-top: 4px; font-size: 0.9rem; }
+    .actions { display: flex; gap: 12px; flex-wrap: wrap; margin: 20px 0 8px; }
+    .btn {
+      flex: 1; min-width: 200px; text-align: center; cursor: pointer;
+      padding: 14px 20px; border-radius: var(--radius-sm); font-weight: 700;
+      font-size: 1rem; border: none; text-decoration: none; display: inline-block;
+    }
+    .btn--primary {
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      color: #fff; box-shadow: 0 8px 24px rgba(94,163,248,0.25);
+    }
+    .btn--glass {
+      background: var(--surface-3); color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .hint { color: var(--text-dim); font-size: 0.85rem; margin-top: 8px; }
+    .words { list-style: none; margin-top: 8px; }
+    .word {
+      display: flex; justify-content: space-between; gap: 16px;
+      padding: 12px 4px; border-bottom: 1px solid var(--border);
+    }
+    .word:last-child { border-bottom: none; }
+    .word .w { font-weight: 600; }
+    .word .t { color: var(--text-dim); text-align: right; }
+    .error { color: #f06060; }
+    .muted { color: var(--text-dim); }
+    a.plain { color: var(--blue); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="brand" href="/">FlexLex</a>
+    <div id="root">
+      <div class="card"><p class="muted">Loading shared set…</p></div>
+    </div>
+    <p class="hint">
+      Don’t have FlexLex yet?
+      <a class="plain" href="/#download">Get the app</a>, then open this link
+      again — or download the file and import it from Settings.
+    </p>
+  </div>
+
+  <script>
+    // Mirror of lib/features/share/share_link_format.dart. This page always
+    // ships the newest decoder, so it is the safety net: even a link an
+    // installed app can't yet parse can still be viewed and downloaded here.
+    const MAX_SUPPORTED_ENVELOPE = 1;
+
+    async function decodeShareHash(hash) {
+      const frag = hash.startsWith('#') ? hash.slice(1) : hash;
+      const dot = frag.indexOf('.');
+      if (dot <= 0) throw { kind: 'format' };
+      const envelope = parseInt(frag.slice(0, dot), 10);
+      if (!Number.isInteger(envelope)) throw { kind: 'format' };
+      if (envelope > MAX_SUPPORTED_ENVELOPE) throw { kind: 'toonew', envelope };
+
+      let b64 = frag.slice(dot + 1).replace(/-/g, '+').replace(/_/g, '/');
+      while (b64.length % 4) b64 += '=';
+      let bytes;
+      try {
+        const bin = atob(b64);
+        bytes = new Uint8Array(bin.length);
+        for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      } catch (e) { throw { kind: 'format' }; }
+
+      try {
+        const ds = new DecompressionStream('gzip');
+        const stream = new Blob([bytes]).stream().pipeThrough(ds);
+        const text = await new Response(stream).text();
+        return JSON.parse(text);
+      } catch (e) { throw { kind: 'format' }; }
+    }
+
+    function normalizePairs(words) {
+      if (!Array.isArray(words)) return [];
+      return words.map((p) => Array.isArray(p)
+        ? { word: (p[0] ?? '').toString(), translation: (p[1] ?? '').toString() }
+        : { word: (p.word ?? p.w ?? '').toString(),
+            translation: (p.translation ?? p.t ?? '').toString() })
+        .filter((p) => p.word || p.translation);
+    }
+
+    function toFlexlexJson(payload, pairs) {
+      return {
+        appVersion: 1,
+        type: 'set',
+        folders: [{
+          name: payload.name || 'Shared Set',
+          type: 'set',
+          sourceLanguage: payload.src || '',
+          targetLanguage: payload.tgt || '',
+          sortArticles: payload.sa || '',
+          words: pairs.map((p) => ({ word: p.word, translation: p.translation })),
+        }],
+      };
+    }
+
+    function esc(s) {
+      return s.replace(/[&<>"']/g, (c) => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[c]));
+    }
+
+    function download(payload, pairs) {
+      const json = JSON.stringify(toFlexlexJson(payload, pairs), null, 2);
+      const blob = new Blob([json], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const safe = (payload.name || 'shared-set').replace(/[^\w\s-]/g, '').trim() || 'shared-set';
+      const a = document.createElement('a');
+      a.href = url; a.download = safe + '.flexlex.json';
+      document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function render(payload) {
+      const pairs = normalizePairs(payload.words);
+      const root = document.getElementById('root');
+      const langs = [payload.src, payload.tgt].filter(Boolean).join(' → ');
+      const rows = pairs.map((p) =>
+        `<li class="word"><span class="w">${esc(p.word)}</span>` +
+        `<span class="t">${esc(p.translation)}</span></li>`).join('');
+
+      root.innerHTML =
+        `<div class="card">
+           <div class="set-name">${esc(payload.name || 'Shared set')}</div>
+           ${langs ? `<div class="langs">${esc(langs)}</div>` : ''}
+           <div class="count">${pairs.length} word${pairs.length === 1 ? '' : 's'}</div>
+           <div class="actions">
+             <a class="btn btn--primary" href="${esc(location.href)}">Open in FlexLex</a>
+             <button class="btn btn--glass" id="dl">Download file</button>
+           </div>
+           <p class="hint">If you have the app installed, “Open in FlexLex” imports
+             the set. Otherwise download the file and import it from
+             Settings → Import.</p>
+         </div>
+         <div class="card"><ul class="words">${rows}</ul></div>`;
+
+      document.getElementById('dl').addEventListener('click', () => download(payload, pairs));
+    }
+
+    function renderError(kind) {
+      const root = document.getElementById('root');
+      if (kind === 'toonew') {
+        root.innerHTML = `<div class="card">
+          <p class="error">This set was made with a newer version of FlexLex.</p>
+          <p class="hint">Please refresh this page — it may need the latest decoder.</p>
+        </div>`;
+      } else {
+        root.innerHTML = `<div class="card">
+          <p class="error">This FlexLex link is empty or corrupted.</p>
+          <p class="hint">Ask the sender to share the set again.</p>
+        </div>`;
+      }
+    }
+
+    (async function () {
+      if (!location.hash || location.hash.length < 3) {
+        renderError('format');
+        return;
+      }
+      try {
+        const payload = await decodeShareHash(location.hash);
+        render(payload);
+      } catch (e) {
+        renderError(e && e.kind === 'toonew' ? 'toonew' : 'format');
+      }
+    })();
+  </script>
+</body>
+</html>

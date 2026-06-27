@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.flexlex.app",
+      "sha256_cert_fingerprints": [
+        "8F:8B:62:F3:4B:17:A7:B5:3A:08:1D:A4:83:03:91:9B:CB:40:84:5C:F9:23:53:1A:5F:7B:FC:F7:5B:60:9A:1C"
+      ]
+    }
+  }
+]
