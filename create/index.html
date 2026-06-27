@@ -138,7 +138,7 @@
       <div class="out-link" id="outLink"></div>
       <div class="actions">
         <button class="btn btn--primary" id="copyBtn" type="button">Copy link</button>
-        <a class="btn btn--glass" id="openBtn" target="_blank" rel="noopener">Open the set</a>
+        <button class="btn btn--glass" id="openBtn" type="button">Open the set</button>
         <button class="btn btn--glass" id="downloadBtn" type="button">Download file</button>
       </div>
       <p class="muted len-note" id="lenNote"></p>
@@ -304,7 +304,6 @@
         const link = await encodeSetShareLink(set);
         lastSet = set; lastLink = link;
         document.getElementById('outLink').textContent = link;
-        document.getElementById('openBtn').href = link;
         const note = document.getElementById('lenNote');
         note.textContent = `${words.length} words · link is ${link.length} characters long.`;
         note.className = 'muted len-note' + (link.length > 4000 ? ' warn' : '');
@@ -343,6 +342,33 @@
         box.innerHTML = tooBig;
       }
     }
+
+    // Open the set in the installed app, or fall back to the Play Store so a
+    // user without FlexLex can install it. Android intent:// with a
+    // browser_fallback_url; payload rides as ?d= (intent:// can't carry a
+    // #fragment). Non-Android has no app to open, so go straight to the store.
+    const PLAY_URL = 'https://play.google.com/store/apps/details?id=com.flexlex.app';
+    function isAndroid() { return /Android/i.test(navigator.userAgent || ''); }
+    function openInApp(shareLink) {
+      const i = shareLink.indexOf('#');
+      const payload = i >= 0 ? shareLink.slice(i + 1) : '';
+      if (!isAndroid() || !payload) { window.location.href = PLAY_URL; return; }
+      const intentUrl = 'intent://flexlex.app/s?d=' + encodeURIComponent(payload) +
+        '#Intent;scheme=https;package=com.flexlex.app;S.browser_fallback_url=' +
+        encodeURIComponent(PLAY_URL) + ';end';
+      let left = false;
+      const onHide = () => { left = true; };
+      document.addEventListener('visibilitychange', onHide);
+      window.location.href = intentUrl;
+      setTimeout(() => {
+        document.removeEventListener('visibilitychange', onHide);
+        if (!left && !document.hidden) window.location.href = PLAY_URL;
+      }, 1500);
+    }
+
+    document.getElementById('openBtn').addEventListener('click', () => {
+      if (lastLink) openInApp(lastLink);
+    });
 
     document.getElementById('copyBtn').addEventListener('click', async () => {
       try {
