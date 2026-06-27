@@ -5,7 +5,8 @@
       "namespace": "android_app",
       "package_name": "com.flexlex.app",
       "sha256_cert_fingerprints": [
-        "8F:8B:62:F3:4B:17:A7:B5:3A:08:1D:A4:83:03:91:9B:CB:40:84:5C:F9:23:53:1A:5F:7B:FC:F7:5B:60:9A:1C"
+        "8F:8B:62:F3:4B:17:A7:B5:3A:08:1D:A4:83:03:91:9B:CB:40:84:5C:F9:23:53:1A:5F:7B:FC:F7:5B:60:9A:1C",
+        "B6:14:9A:D2:5D:94:25:CE:72:B5:F2:11:F8:C1:10:31:FD:FF:B3:02:93:4F:D9:6C:FA:1E:E3:66:C7:30:66:8B"
       ]
     }
   }
