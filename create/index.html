@@ -142,10 +142,16 @@
         <button class="btn btn--glass" id="downloadBtn" type="button">Download file</button>
       </div>
       <p class="muted len-note" id="lenNote"></p>
+      <div id="qrBox" style="margin-top:18px;text-align:center"></div>
     </div>
 
     <p class="back"><a class="plain" href="/">← Back to flexlex.app</a></p>
   </div>
+
+  <!-- Vendored locally (MIT, Kazuhiko Arase) so QR generation stays fully
+       client-side — the link contains the user's words and must never be sent
+       to a third-party QR service. -->
+  <script src="qrcode.js"></script>
 
   <script>
     // Mirror of duok/lib/features/share/share_link_format.dart (encode side).
@@ -153,6 +159,9 @@
     const ENVELOPE = 1;
     const MAX_WORDS = 5000;
     const MAX_FIELD = 500;
+    // Above this link length a QR becomes too dense to scan reliably off a
+    // screen (~roughly version 23+). Larger sets fall back to link/file.
+    const QR_MAX_CHARS = 1200;
 
     const rowsEl = document.getElementById('rows');
     const wordCountEl = document.getElementById('wordCount');
@@ -302,12 +311,38 @@
         if (link.length > 4000) {
           note.textContent += ' Very long links can be awkward in some chat apps — consider splitting into smaller sets or using “Download file”.';
         }
+        renderQR(link);
         document.getElementById('result').classList.add('show');
         document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       } catch (e) {
         errorEl.textContent = 'Could not build the link in this browser.';
       }
     });
+
+    // Capped QR: only render when the link is short enough to scan reliably.
+    function renderQR(link) {
+      const box = document.getElementById('qrBox');
+      const tooBig =
+        '<p class="muted">This set is too large for a scannable QR code (link is ' +
+        link.length + ' characters). Share the link or use “Download file” above.</p>';
+      if (link.length > QR_MAX_CHARS || typeof qrcode !== 'function') {
+        box.innerHTML = link.length > QR_MAX_CHARS ? tooBig : '';
+        return;
+      }
+      try {
+        const qr = qrcode(0, 'L');
+        qr.addData(link);
+        qr.make();
+        box.innerHTML =
+          '<img alt="QR code for this set" src="' + qr.createDataURL(8, 4) + '" ' +
+          'style="width:240px;height:240px;image-rendering:pixelated;background:#fff;' +
+          'padding:10px;border-radius:12px" />' +
+          '<p class="muted" style="margin-top:8px">Scan with another phone’s camera ' +
+          'to open this set in FlexLex.</p>';
+      } catch (e) {
+        box.innerHTML = tooBig;
+      }
+    }
 
     document.getElementById('copyBtn').addEventListener('click', async () => {
       try {
