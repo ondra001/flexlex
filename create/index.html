@@ -85,6 +85,15 @@
       font-family: inherit; resize: vertical;
     }
     .error { color: var(--red); margin-top: 10px; font-size: 0.9rem; }
+    .drop {
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+      margin-top: 12px; padding: 14px; border-radius: var(--radius-sm);
+      border: 1px dashed var(--border); background: var(--surface-3);
+      transition: border-color .15s, background .15s;
+    }
+    .drop.is-over { border-color: var(--blue); background: rgba(94,163,248,0.08); }
+    .drop__t { color: var(--text-dim); font-size: 0.85rem; }
+    .ok { color: var(--green); }
     a.plain { color: var(--blue); text-decoration: none; }
     .back { margin-top: 28px; }
   </style>
@@ -119,6 +128,13 @@
       </div>
       <div id="rows"></div>
       <button class="btn btn--ghost" id="addRow" type="button">+ Add word</button>
+
+      <div class="drop" id="drop">
+        <input type="file" id="fileIn" accept=".xlsx,.csv,.tsv,.txt,.json" hidden />
+        <button class="btn btn--glass" id="fileBtn" type="button">Import a file</button>
+        <span class="drop__t">or drop an Excel / CSV file here</span>
+      </div>
+      <p class="muted" id="importNote" style="margin-top:8px"></p>
 
       <details>
         <summary>Paste a list instead</summary>
@@ -158,6 +174,9 @@
   <!-- Study overlay (Flashcards + Write). Shared with /s; reads the rows
        straight out of the builder, so you can study before sharing. -->
   <script src="../study.js"></script>
+  <!-- Spreadsheet import (.xlsx/.csv/.tsv/.txt/.json). Parses in the browser,
+       no library and no upload — same no-server promise as the share links. -->
+  <script src="../import.js"></script>
 
   <script>
     // Mirror of duok/lib/features/share/share_link_format.dart (encode side).
@@ -398,6 +417,75 @@
       document.body.appendChild(a); a.click(); a.remove();
       URL.revokeObjectURL(url);
     });
+
+    // ── file import ────────────────────────────────────────────────────────
+    const dropEl = document.getElementById('drop');
+    const fileIn = document.getElementById('fileIn');
+    const importNote = document.getElementById('importNote');
+
+    async function importFile(file) {
+      importNote.textContent = '';
+      importNote.className = 'muted';
+      errorEl.textContent = '';
+      try {
+        const res = await FlexLexImport.parseFile(file);
+        if (!res.pairs.length) {
+          errorEl.textContent = 'No words found in that file.';
+          return;
+        }
+
+        // Append rather than replace: importing twice merges, and nothing the
+        // user already typed is silently thrown away.
+        rows = filledRows().concat(res.pairs);
+        renderRows();
+
+        // A file that names the set should fill an empty name field, but must
+        // never overwrite one the user chose.
+        const nameEl = document.getElementById('setName');
+        if (res.setName && !nameEl.value.trim()) nameEl.value = res.setName;
+
+        const bits = [
+          'Imported ' + res.pairs.length +
+            (res.pairs.length === 1 ? ' word' : ' words'),
+        ];
+        if (res.sheet) bits.push('from sheet “' + res.sheet + '”');
+        if (res.droppedHeader) bits.push('header row skipped');
+        if (res.truncated) {
+          bits.push(res.truncated + ' more were left out (' +
+            FlexLexImport.MAX_WORDS + ' is the limit here)');
+        }
+        importNote.textContent = bits.join(' · ');
+        importNote.className = res.truncated ? 'len-note warn' : 'ok';
+      } catch (e) {
+        errorEl.textContent = (e && e.message) || 'Could not read that file.';
+      }
+    }
+
+    document.getElementById('fileBtn').addEventListener('click', () => fileIn.click());
+    fileIn.addEventListener('change', () => {
+      if (fileIn.files && fileIn.files[0]) importFile(fileIn.files[0]);
+      fileIn.value = ''; // let the same file be picked twice
+    });
+
+    ['dragenter', 'dragover'].forEach((ev) =>
+      dropEl.addEventListener(ev, (e) => {
+        e.preventDefault();
+        dropEl.classList.add('is-over');
+      }));
+    ['dragleave', 'drop'].forEach((ev) =>
+      dropEl.addEventListener(ev, (e) => {
+        e.preventDefault();
+        dropEl.classList.remove('is-over');
+      }));
+    dropEl.addEventListener('drop', (e) => {
+      const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+      if (f) importFile(f);
+    });
+    // Without this the browser navigates away to the dropped file.
+    ['dragover', 'drop'].forEach((ev) =>
+      window.addEventListener(ev, (e) => {
+        if (!dropEl.contains(e.target)) e.preventDefault();
+      }));
 
     // Study straight from the rows — no link needed. Reads live state on each
     // click so edits made after a previous run are picked up.
