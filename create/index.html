@@ -130,7 +130,10 @@
       </details>
     </div>
 
-    <button class="btn btn--primary" id="generate" type="button" disabled>Generate share link</button>
+    <div class="actions" style="margin-top:0">
+      <button class="btn btn--primary" id="generate" type="button" disabled>Generate share link</button>
+      <button class="btn btn--glass" id="studyBtn" type="button" disabled>Study these words</button>
+    </div>
     <div class="error" id="error"></div>
 
     <div class="card result" id="result">
@@ -152,6 +155,9 @@
        client-side — the link contains the user's words and must never be sent
        to a third-party QR service. -->
   <script src="qrcode.js"></script>
+  <!-- Study overlay (Flashcards + Write). Shared with /s; reads the rows
+       straight out of the builder, so you can study before sharing. -->
+  <script src="../study.js"></script>
 
   <script>
     // Mirror of duok/lib/features/share/share_link_format.dart (encode side).
@@ -166,6 +172,7 @@
     const rowsEl = document.getElementById('rows');
     const wordCountEl = document.getElementById('wordCount');
     const generateBtn = document.getElementById('generate');
+    const studyBtn = document.getElementById('studyBtn');
     const errorEl = document.getElementById('error');
 
     let rows = [];
@@ -197,6 +204,7 @@
       const n = filledRows().length;
       wordCountEl.textContent = n + (n === 1 ? ' word' : ' words');
       generateBtn.disabled = n === 0;
+      studyBtn.disabled = n === 0;
     }
 
     rowsEl.addEventListener('input', (e) => {
@@ -389,6 +397,22 @@
       a.href = url; a.download = safe + '.flexlex.json';
       document.body.appendChild(a); a.click(); a.remove();
       URL.revokeObjectURL(url);
+    });
+
+    // Study straight from the rows — no link needed. Reads live state on each
+    // click so edits made after a previous run are picked up.
+    studyBtn.addEventListener('click', () => {
+      const words = filledRows()
+        .map(r => ({ word: cap(r.word.trim()), translation: cap(r.translation.trim()) }))
+        .filter(p => p.word || p.translation)
+        .slice(0, MAX_WORDS);
+      if (!words.length) return;
+      window.FlexLexStudy.open({
+        name: (document.getElementById('setName').value || '').trim() || 'My Set',
+        src: (document.getElementById('srcLang').value || '').trim(),
+        tgt: (document.getElementById('tgtLang').value || '').trim(),
+        pairs: words,
+      });
     });
 
     // Seed three empty rows.

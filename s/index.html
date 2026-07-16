@@ -87,6 +87,10 @@
     </p>
   </div>
 
+  <!-- Study overlay (Flashcards + Write). Shared with /create; operates on the
+       already-decoded pairs, so it never touches the link format. -->
+  <script src="../study.js"></script>
+
   <script>
     // Mirror of lib/features/share/share_link_format.dart. This page always
     // ships the newest decoder, so it is the safety net: even a link an
@@ -174,16 +178,25 @@
            <div class="count">${pairs.length} word${pairs.length === 1 ? '' : 's'}</div>
            <div class="actions">
              <button class="btn btn--primary" id="openApp" type="button">Open in FlexLex</button>
+             <button class="btn btn--glass" id="study" type="button">Study here</button>
              <button class="btn btn--glass" id="dl">Download file</button>
            </div>
            <p class="hint">If you have the app installed, “Open in FlexLex” imports
              the set. Otherwise download the file and import it from
-             Settings → Import.</p>
+             Settings → Import — or study it right here in your browser.</p>
          </div>
          <div class="card"><ul class="words">${rows}</ul></div>`;
 
       document.getElementById('dl').addEventListener('click', () => download(payload, pairs));
       document.getElementById('openApp').addEventListener('click', () => openInApp(location.href));
+      document.getElementById('study').addEventListener('click', () => {
+        window.FlexLexStudy.open({
+          name: payload.name || 'Shared set',
+          src: payload.src || '',
+          tgt: payload.tgt || '',
+          pairs,
+        });
+      });
     }
 
     // Open the set in the installed app, or fall back to the Play Store so an
