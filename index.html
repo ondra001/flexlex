@@ -3,20 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FlexLex - Master Vocabulary Your Way</title>
-  <meta name="description" content="FlexLex is a powerful vocabulary learning app with flashcards, spaced repetition, 8 study modes, OCR scanning, and full offline support for Android and iOS.">
+  <title>FlexLex — Learn words. Remember them.</title>
+  <meta name="description" content="A vocabulary app for Android with nine study modes, spaced repetition, page scanning and spreadsheet import. Every feature is free, no account needed, and your words never leave your phone.">
+
+  <!-- Applied before first paint so a dark-mode visitor never sees a white flash. -->
+  <script src="/theme.js"></script>
 
   <!-- Open Graph -->
-  <meta property="og:title" content="FlexLex — Master Vocabulary Your Way">
-  <meta property="og:description" content="8 study modes, spaced repetition, OCR scanning, and full offline support. Free to start, no account needed.">
+  <meta property="og:title" content="FlexLex — Learn words. Remember them.">
+  <meta property="og:description" content="Nine study modes, spaced repetition, page scanning and import. Every feature free, no account, fully offline.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://flexlex.app">
   <meta property="og:image" content="https://flexlex.app/og-image.png">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="FlexLex — Master Vocabulary Your Way">
-  <meta name="twitter:description" content="8 study modes, spaced repetition, OCR scanning, and full offline support. Free to start, no account needed.">
+  <meta name="twitter:title" content="FlexLex — Learn words. Remember them.">
+  <meta name="twitter:description" content="Nine study modes, spaced repetition, page scanning and import. Every feature free, no account, fully offline.">
   <meta name="twitter:image" content="https://flexlex.app/og-image.png">
 
   <!-- Favicon -->
@@ -24,705 +27,325 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/FL-logo.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/FL-logo.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/FL-logo.png">
-  <link rel="shortcut icon" href="/FL-logo.png">
 
-  <!-- Theme -->
-  <meta name="theme-color" content="#08090e">
+  <meta name="theme-color" content="#FBF7EC">
 
-  <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- Nunito + Inter: the exact pairing the app bundles (app_typography.dart) -->
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- The app's own icon set, at its FILL/weight -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,600,1,0" rel="stylesheet">
+  <link rel="stylesheet" href="/theme.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- AURORA BACKGROUND -->
-  <div class="aurora" aria-hidden="true">
-    <div class="aurora__blob aurora__blob--1"></div>
-    <div class="aurora__blob aurora__blob--2"></div>
-    <div class="aurora__blob aurora__blob--3"></div>
-    <div class="aurora__blob aurora__blob--4"></div>
-  </div>
-  <div class="noise-overlay" aria-hidden="true"></div>
-
   <!-- NAV -->
   <nav class="nav" id="nav">
-    <div class="nav__progress" id="navProgress"></div>
-    <div class="container nav__inner">
-      <a href="#" class="nav__logo">
-        <img src="FL-logo.png" alt="FlexLex" class="logo-icon">
-        <span>FlexLex</span>
-      </a>
-      <button class="nav__toggle" id="navToggle" aria-label="Toggle menu">
-        <span></span><span></span><span></span>
+    <div class="wrap nav__inner">
+      <a href="#" class="nav__logo"><img src="FL-logo.png" alt="">FlexLex</a>
+      <button class="nav__toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+        <span class="sym">menu</span>
       </button>
       <ul class="nav__links" id="navLinks">
+        <li><a href="#modes">Study modes</a></li>
+        <li><a href="#story">Story</a></li>
         <li><a href="#features">Features</a></li>
-        <li><a href="#modes">Study Modes</a></li>
         <li><a href="#pricing">Pricing</a></li>
-        <li><a href="#faq">FAQ</a></li>
-        <li><a href="/create/">Create a Set</a></li>
-        <li><a href="https://play.google.com/store/apps/details?id=com.flexlex.app" target="_blank" rel="noopener" class="btn btn--nav">Get the App</a></li>
+        <li><a href="/create/">Create a set</a></li>
+        <li>
+          <button class="theme-btn">
+            <span class="sym sym-light">dark_mode</span>
+            <span class="sym sym-dark">light_mode</span>
+          </button>
+        </li>
+        <li><a href="https://play.google.com/store/apps/details?id=com.flexlex.app" target="_blank" rel="noopener" class="btn btn--go btn--sm">Get the app</a></li>
       </ul>
     </div>
   </nav>
 
   <!-- HERO -->
   <header class="hero" id="hero">
-    <div class="hero__spotlight" id="heroSpotlight" aria-hidden="true"></div>
-    <div class="container hero__inner">
-      <div class="hero__text">
-        <div class="hero__badge">Vocabulary Learning, Reimagined</div>
-        <div class="hero__chips">
-          <span class="glow-chip glow-chip--green">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-            No Ads. Ever.
-          </span>
-          <span class="glow-chip glow-chip--gold">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V22H4V12"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z"/></svg>
-            Try 30 Days Free
-          </span>
-        </div>
-        <h1>Learn Words.<br><span class="gradient-text">Remember Them.</span></h1>
-        <p class="hero__sub">
-          8 study modes. Spaced repetition that adapts to you.
-          OCR scanning. Translation suggestions. Full offline support.
-          No account needed. Just you and the words.
-        </p>
+    <div class="wrap hero__inner">
+      <div>
+        <div class="hero__free"><span class="sym">check_circle</span>Fully free. Forever.</div>
+        <h1>Learn words.<br>Remember them.</h1>
+        <p class="hero__sub">Nine study modes and spaced repetition that brings each word back on the day you’re about to forget it. Everything stays on your phone.</p>
         <div class="hero__actions">
-          <a href="https://play.google.com/store/apps/details?id=com.flexlex.app" target="_blank" rel="noopener" class="btn btn--primary btn--lg">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-            Download Free
-          </a>
-          <a href="#how-it-works" class="btn btn--glass btn--lg">See How It Works</a>
+          <a href="https://play.google.com/store/apps/details?id=com.flexlex.app" target="_blank" rel="noopener" class="btn btn--go"><span class="sym">android</span>Get it on Google Play</a>
+          <a href="/create/" class="btn"><span class="sym">add_circle</span>Build a set in your browser</a>
         </div>
-        <div class="hero__stats">
-          <div class="hero__stat">
-            <strong>8</strong><span>Study Modes</span>
-          </div>
-          <div class="hero__stat-divider"></div>
-          <div class="hero__stat">
-            <strong>100%</strong><span>Offline</span>
-          </div>
-          <div class="hero__stat-divider"></div>
-          <div class="hero__stat">
-            <strong>Free</strong><span>To Start</span>
-          </div>
+        <div class="hero__trust">
+          <span><span class="sym">person_off</span>No account</span>
+          <span><span class="sym">cloud_off</span>Works offline</span>
+          <span><span class="sym">lock</span>Nothing leaves your phone</span>
         </div>
       </div>
-      <div class="hero__visual" id="heroVisual">
-        <div class="phone-mockup" id="phoneMockup">
-          <div class="phone-notch"></div>
-          <div class="phone-screen">
-            <div class="demo-header">
-              <span class="demo-set-name" id="demoSetName">German Basics</span>
-              <span class="demo-counter">4 / 20</span>
-            </div>
-            <div class="demo-card" id="demoCard">
-              <div class="demo-card__front">
-                <div class="demo-card__label">Word</div>
-                <div class="demo-card__word" id="demoWord">Schmetterling</div>
-                <div class="demo-card__hint">Tap to flip</div>
-              </div>
-              <div class="demo-card__back">
-                <div class="demo-card__label">Translation</div>
-                <div class="demo-card__word demo-card__word--answer" id="demoTranslation">Butterfly</div>
-                <div class="demo-card__hint">Tap to flip</div>
-              </div>
-            </div>
-            <div class="demo-actions demo-actions--two">
-              <div class="demo-action demo-action--no">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
-                Don't Know
-              </div>
-              <div class="demo-action demo-action--yes">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-                Know
-              </div>
-            </div>
+
+      <!-- The app's set-detail screen, rebuilt with the app's own tokens -->
+      <div class="phone" aria-hidden="true">
+        <div class="phone__top">
+          <span class="sym">arrow_back</span>
+          <div class="phone__stats">
+            <span class="phone__stat s-streak"><span class="sym">local_fire_department</span>12</span>
+            <span class="phone__stat s-gem"><span class="sym">diamond</span>340</span>
+            <span class="phone__stat s-heart"><span class="sym">favorite</span>5</span>
           </div>
         </div>
-        <div class="float-card float-card--1">
-          <div class="float-card__icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        <div class="phone__body">
+          <div class="phone__set">
+            <div class="phone__set-name">German — B1</div>
+            <div class="phone__set-meta">Deutsch → English · 128 words</div>
+            <div class="bar"><i></i></div>
+            <div class="bar-label">62% learned · 8 due today</div>
           </div>
-          <div>
-            <strong>SRS Active</strong>
-            <span>Next review in 2d</span>
+          <div class="phone__label">Study modes</div>
+          <div class="phone__tiles">
+            <div class="tile c-green"><div class="tile-ico"><span class="sym">style</span></div><div class="tile-l">Flashcards</div></div>
+            <div class="tile c-blue"><div class="tile-ico"><span class="sym">stylus_note</span></div><div class="tile-l">Write</div></div>
+            <div class="tile c-purple"><div class="tile-ico"><span class="sym">checklist</span></div><div class="tile-l">Multi Choice</div></div>
+            <div class="tile c-teal"><div class="tile-ico"><span class="sym">assignment</span></div><div class="tile-l">Test</div></div>
+            <div class="tile c-orange"><div class="tile-ico"><span class="sym">extension</span></div><div class="tile-l">Match</div></div>
+            <div class="tile c-pink"><div class="tile-ico"><span class="sym">bolt</span></div><div class="tile-l">Rush</div></div>
+            <div class="tile c-indigo"><div class="tile-ico"><span class="sym">graphic_eq</span></div><div class="tile-l">Spell</div></div>
+            <div class="tile c-lime"><div class="tile-ico"><span class="sym">school</span></div><div class="tile-l">Learn</div></div>
+            <div class="tile tile--story">
+              <div class="tile-ico"><span class="sym">auto_stories</span></div>
+              <div><div class="tile-l">Story</div><div class="tile__sub">See your words in a story</div></div>
+              <span class="tile__pill">AI</span>
+            </div>
           </div>
-        </div>
-        <div class="float-card float-card--2">
-          <div class="float-card__streak">12</div>
-          <span>Day streak</span>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- FEATURES -->
-  <section class="section features" id="features">
-    <div class="container">
-      <div class="section-label">Features</div>
-      <h2 class="section__title">Everything You Need.<br><span class="gradient-text">Nothing You Don't.</span></h2>
-      <p class="section__sub">No bloat, no subscriptions, no cloud dependency. FlexLex is built for learners who want results.</p>
-
-      <div class="bento">
-        <div class="bento__item bento__item--wide bento__item--srs">
-          <div class="bento__content">
-            <div class="bento__icon bento__icon--blue">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-            </div>
-            <h3>Spaced Repetition System</h3>
-            <p>FlexLex tracks every answer and schedules reviews right before you'd forget. Words you struggle with appear more often. Words you know fade into long-term memory.</p>
-          </div>
-          <div class="bento__visual bento__visual--srs">
-            <div class="srs-demo">
-              <div class="srs-bar" style="--h: 20%; --color: var(--red)"><span>Day 1</span></div>
-              <div class="srs-bar" style="--h: 45%; --color: var(--orange)"><span>Day 3</span></div>
-              <div class="srs-bar" style="--h: 65%; --color: var(--blue)"><span>Day 7</span></div>
-              <div class="srs-bar" style="--h: 80%; --color: var(--teal)"><span>Day 14</span></div>
-              <div class="srs-bar" style="--h: 95%; --color: var(--green)"><span>Day 30</span></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="bento__item bento__item--ocr">
-          <div class="bento__icon bento__icon--purple">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-          </div>
-          <h3>OCR Scanner</h3>
-          <p>Point your camera at a textbook, worksheet, or whiteboard. Scan word–translation pairs or individual words — FlexLex reads them and imports them into your set instantly.</p>
-        </div>
-
-        <div class="bento__item bento__item--offline">
-          <div class="bento__icon bento__icon--green">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          </div>
-          <h3>Fully Offline</h3>
-          <p>Everything lives on your device. No account, no internet, no data collection. Your words are yours alone.</p>
-        </div>
-
-        <div class="bento__item bento__item--organize">
-          <div class="bento__icon bento__icon--orange">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
-          </div>
-          <h3>Smart Organization</h3>
-          <p>Folders, sets, nested structures. Organize by language, by topic, by difficulty. However your brain works.</p>
-        </div>
-
-        <div class="bento__item bento__item--wide bento__item--article">
-          <div class="bento__content">
-            <div class="bento__icon bento__icon--pink">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/></svg>
-            </div>
-            <h3>Article Color Coding</h3>
-            <p>Learning German? Assign colors to <em>der</em>, <em>die</em>, <em>das</em> and see them highlighted everywhere in the app. Works with any language's grammar markers.</p>
-          </div>
-          <div class="bento__visual bento__visual--article">
-            <div class="article-demo">
-              <div class="article-word article-word--der"><span class="article-tag article-tag--blue">der</span> Hund</div>
-              <div class="article-word article-word--die"><span class="article-tag article-tag--red">die</span> Katze</div>
-              <div class="article-word article-word--das"><span class="article-tag article-tag--green">das</span> Haus</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="bento__item bento__item--import">
-          <div class="bento__icon bento__icon--teal">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
-          </div>
-          <h3>Easy Import</h3>
-          <p>Load words from Excel files, text files, or scan them with your camera. Building your vocabulary library takes seconds.</p>
-        </div>
-
-        <div class="bento__item bento__item--half bento__item--stats">
-          <div class="bento__icon bento__icon--blue">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
-          </div>
-          <h3>Progress Tracking</h3>
-          <p>Daily stats, accuracy charts, word status breakdowns. See exactly where you stand and what needs work.</p>
-        </div>
-
-        <div class="bento__item bento__item--half bento__item--dict">
-          <div class="bento__icon bento__icon--purple">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
-          </div>
-          <h3>Smart Suggestions</h3>
-          <p>Type a word and get instant translation suggestions. Powered by built-in dictionaries for dozens of languages.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- HOW IT WORKS -->
-  <section class="section how" id="how-it-works">
-    <div class="container">
-      <div class="section-label">How It Works</div>
-      <h2 class="section__title">From Zero to Fluent<br><span class="gradient-text">in 4 Simple Steps</span></h2>
-
-      <div class="timeline">
-        <div class="timeline__rail">
-          <div class="timeline__rail-fill" id="timelineFill"></div>
-        </div>
-
-        <div class="timeline__step timeline__step--left">
-          <div class="timeline__node">
-            <span>01</span>
-          </div>
-          <div class="timeline__card">
-            <div class="timeline__head">
-              <div class="timeline__icon timeline__icon--blue">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
-              </div>
-              <h3>Create or Import</h3>
-            </div>
-            <p>Add words manually, scan them with your camera, or load an Excel file. Build your vocabulary library in seconds.</p>
-          </div>
-        </div>
-
-        <div class="timeline__step timeline__step--right">
-          <div class="timeline__node">
-            <span>02</span>
-          </div>
-          <div class="timeline__card">
-            <div class="timeline__head">
-              <div class="timeline__icon timeline__icon--purple">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
-              </div>
-              <h3>Choose Your Mode</h3>
-            </div>
-            <p>Flashcards for quick review. Write mode for active recall. Match game for fun. Pick what fits your mood and your time.</p>
-          </div>
-        </div>
-
-        <div class="timeline__step timeline__step--left">
-          <div class="timeline__node">
-            <span>03</span>
-          </div>
-          <div class="timeline__card">
-            <div class="timeline__head">
-              <div class="timeline__icon timeline__icon--teal">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
-              </div>
-              <h3>Study &amp; Get Feedback</h3>
-            </div>
-            <p>Every answer is tracked. Words are categorized as Know, Don't Know, or Hard. The SRS algorithm adjusts your schedule in real time.</p>
-          </div>
-        </div>
-
-        <div class="timeline__step timeline__step--right">
-          <div class="timeline__node">
-            <span>04</span>
-          </div>
-          <div class="timeline__card">
-            <div class="timeline__head">
-              <div class="timeline__icon timeline__icon--green">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg>
-              </div>
-              <h3>Watch Your Progress</h3>
-            </div>
-            <p>Daily streaks, accuracy rates, mastery levels. See words move from "Don't Know" to "Know" as your vocabulary grows.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- STUDY MODES -->
-  <section class="section modes" id="modes">
-    <div class="container">
-      <div class="section-label">Study Modes</div>
-      <h2 class="section__title">8 Ways to Learn.<br><span class="gradient-text">One App.</span></h2>
-      <p class="section__sub">Different modes activate different parts of your memory. Mix them for maximum retention.</p>
+  <section class="section" id="modes">
+    <div class="wrap">
+      <div class="eyebrow">Eight ways in</div>
+      <h2>One set. Eight ways to drill it.</h2>
+      <p class="lede">The same words, eight different ways — because the mode that finally makes a word stick isn’t the same for everyone. These are the tiles you’ll actually tap.</p>
+      <div class="modes">
+        <div class="tile c-green"><div class="tile-ico"><span class="sym">style</span></div><div><div class="tile-l">Flashcards</div><div class="tile-d">Flip, swipe, shuffle</div></div></div>
+        <div class="tile c-blue"><div class="tile-ico"><span class="sym">stylus_note</span></div><div><div class="tile-l">Write</div><div class="tile-d">Type it from memory</div></div></div>
+        <div class="tile c-purple"><div class="tile-ico"><span class="sym">checklist</span></div><div><div class="tile-l">Multi Choice</div><div class="tile-d">Four options, one answer</div></div></div>
+        <div class="tile c-teal"><div class="tile-ico"><span class="sym">assignment</span></div><div><div class="tile-l">Test</div><div class="tile-d">Mixed questions, graded</div></div></div>
+        <div class="tile c-orange"><div class="tile-ico"><span class="sym">extension</span></div><div><div class="tile-l">Match</div><div class="tile-d">Pair against the clock</div></div></div>
+        <div class="tile c-pink"><div class="tile-ico"><span class="sym">bolt</span></div><div><div class="tile-l">Rush</div><div class="tile-d">Fast drill, three lives</div></div></div>
+        <div class="tile c-indigo"><div class="tile-ico"><span class="sym">graphic_eq</span></div><div><div class="tile-l">Spell</div><div class="tile-d">Letter for letter</div></div></div>
+        <div class="tile c-lime"><div class="tile-ico"><span class="sym">school</span></div><div><div class="tile-l">Learn</div><div class="tile-d">Adapts as you go</div></div></div>
+      </div>
+      <p class="note"><span class="sym">event_repeat</span>Plus a spaced-repetition <strong>Review</strong> queue that surfaces only what’s due today.</p>
+    </div>
+  </section>
 
-      <!-- FEATURED HERO: Learn Mode -->
-      <div class="modes__featured">
-        <div class="modes__featured-glow"></div>
-        <div class="modes__featured-copy">
-          <span class="modes__featured-label">Flagship Mode · SRS powered</span>
-          <h3>Learn Mode</h3>
-          <p>A guided session that teaches you new words step by step. The SRS algorithm picks what you need to learn next and schedules reviews at the perfect time — so you never waste a study minute.</p>
-          <div class="modes__featured-stats">
-            <div><strong>Adaptive</strong><span>Difficulty</span></div>
-            <div class="modes__featured-divider"></div>
-            <div><strong>Real-time</strong><span>Feedback</span></div>
-            <div class="modes__featured-divider"></div>
-            <div><strong>Zero-setup</strong><span>SRS</span></div>
+  <!-- STORY — the ninth mode, and the one nobody else has -->
+  <section class="section story" id="story">
+    <div class="wrap story__grid">
+      <div>
+        <div class="eyebrow eyebrow--amber"><span class="sym">auto_stories</span>Story mode</div>
+        <h2>Your words. One story.<br>Written tonight, for you.</h2>
+        <p class="lede">Every other app drills words in isolation. FlexLex takes the words <em>you</em> picked and writes a short story around them — at your level, from your set. Then you read it, and tap anything you don’t recognise.</p>
+        <div class="story__opts">
+          <div class="opt">
+            <span class="opt__label">Words</span>
+            <div class="chips">
+              <span class="chip chip--on">All words</span><span class="chip">Hard</span><span class="chip">Don’t know</span><span class="chip">Know</span><span class="chip">Starred</span>
+            </div>
           </div>
-        </div>
-        <div class="modes__featured-visual">
-          <div class="learn-demo">
-            <div class="learn-demo__header">
-              <span class="learn-demo__round">Round 3</span>
-              <div class="learn-demo__bar">
-                <div class="learn-demo__bar-fill"></div>
-              </div>
-              <span class="learn-demo__count">12 / 20</span>
+          <div class="opt">
+            <span class="opt__label">Level</span>
+            <div class="chips">
+              <span class="chip">A1</span><span class="chip">A2</span><span class="chip chip--on">B1</span><span class="chip">B2</span><span class="chip">C1</span><span class="chip">C2</span>
             </div>
-            <div class="learn-demo__prompt">Translate</div>
-            <div class="learn-demo__word">Bibliothek</div>
-            <div class="learn-demo__options">
-              <button class="learn-demo__opt">Library</button>
-              <button class="learn-demo__opt learn-demo__opt--wrong">Bookstore</button>
-              <button class="learn-demo__opt">Archive</button>
-              <button class="learn-demo__opt">Museum</button>
-            </div>
-            <div class="learn-demo__footer">
-              <span class="learn-demo__streak">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                5 in a row
-              </span>
-              <span class="learn-demo__next">Next in 0.5s</span>
-            </div>
+          </div>
+          <div class="opt">
+            <span class="opt__label">How many</span>
+            <div class="slider"><i></i><b></b></div>
+            <span class="opt__val">10 words</span>
           </div>
         </div>
       </div>
 
-      <!-- OTHER MODES: horizontal scroll rail -->
-      <div class="modes__rail-head">
-        <h4>Plus 7 more ways to drill</h4>
-        <div class="modes__rail-arrows">
-          <button class="modes__rail-arrow" data-dir="-1" aria-label="Scroll modes left">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
-          </button>
-          <button class="modes__rail-arrow" data-dir="1" aria-label="Scroll modes right">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>
-          </button>
+      <div class="story__demo">
+        <div class="story__card">
+          <div class="story__head">
+            <span class="sym">auto_stories</span>
+            <div>
+              <div class="story__title">Der Hund und der Regen</div>
+              <div class="story__meta">German · B1 · 10 of your words</div>
+            </div>
+          </div>
+          <p class="story__text">
+            Am Morgen war der Himmel grau und eine schwere <b class="w" data-t="cloud">Wolke</b> hing über der Stadt.
+            Mein <b class="w" data-t="dog">Hund</b> wollte trotzdem nach draußen. Wir mussten schnell
+            <b class="w" data-t="to run">laufen</b>, denn <b class="w" data-t="suddenly">plötzlich</b> begann der
+            <b class="w" data-t="rain">Regen</b>. Er war eiskalt, und die <b class="w" data-t="street">Straße</b>
+            wurde in einer Minute nass. Wir versteckten uns unter einem <b class="w" data-t="tree">Baum</b> und
+            warteten, bis das <b class="w" data-t="weather">Wetter</b> wieder <b class="w" data-t="quiet">ruhig</b>
+            war. Danach roch alles nach <b class="w" data-t="earth">Erde</b>.
+          </p>
+          <div class="story__hint"><span class="sym">touch_app</span>Tap any highlighted word — try it</div>
         </div>
-      </div>
-      <div class="modes__rail" id="modesRail">
-        <div class="mode-mini">
-          <div class="mode-mini__num">01</div>
-          <h4>Flashcards</h4>
-          <p>Swipe through cards, mark what you know. Flip to reveal.</p>
-          <div class="mode-mini__tags"><span>Swipe</span><span>Flip</span></div>
-        </div>
-        <div class="mode-mini">
-          <div class="mode-mini__num">02</div>
-          <h4>Write Mode</h4>
-          <p>Type the translation from memory — pure active recall.</p>
-          <div class="mode-mini__tags"><span>Active recall</span></div>
-        </div>
-        <div class="mode-mini">
-          <div class="mode-mini__num">03</div>
-          <h4>Spell Mode</h4>
-          <p>Hear the pronunciation, spell it letter by letter.</p>
-          <div class="mode-mini__tags"><span>Audio</span></div>
-        </div>
-        <div class="mode-mini">
-          <div class="mode-mini__num">04</div>
-          <h4>Multiple Choice</h4>
-          <p>Pick from 4 to 8 options. Quick, reinforcing rounds.</p>
-          <div class="mode-mini__tags"><span>4-8 options</span></div>
-        </div>
-        <div class="mode-mini">
-          <div class="mode-mini__num">05</div>
-          <h4>Test Mode</h4>
-          <p>Mixed question types, timed. Closest thing to a real exam.</p>
-          <div class="mode-mini__tags"><span>Timed</span><span>Mixed</span></div>
-        </div>
-        <div class="mode-mini">
-          <div class="mode-mini__num">06</div>
-          <h4>Match Game</h4>
-          <p>Pair words with translations against the clock.</p>
-          <div class="mode-mini__tags"><span>Time attack</span></div>
-        </div>
-        <div class="mode-mini">
-          <div class="mode-mini__num">07</div>
-          <h4>Rush Game</h4>
-          <p>How many can you get right before time runs out?</p>
-          <div class="mode-mini__tags"><span>Speed</span><span>High scores</span></div>
+        <div class="story__why">
+          <span class="sym">wifi_off</span>
+          <p><strong>Tapping translates on your device.</strong> The story itself is written with your own Google AI key; nothing else leaves your phone.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- WHY FLEXLEX -->
-  <section class="section why" id="why">
-    <div class="why__bg-glow why__bg-glow--a"></div>
-    <div class="why__bg-glow why__bg-glow--b"></div>
-    <div class="container">
-      <div class="section-label">Why FlexLex</div>
-      <h2 class="section__title">Built Different.<br><span class="gradient-text">On Purpose.</span></h2>
-      <p class="section__sub">Most vocabulary apps want your data, your money every month, and your internet connection. FlexLex doesn't.</p>
-
-      <div class="why__rows">
-
-        <!-- ROW 1: privacy -->
-        <div class="why__row">
-          <div class="why__text">
-            <div class="why__eyebrow why__eyebrow--green">Privacy First</div>
-            <h3>Your data stays <span class="why__hl why__hl--green">on your device</span>.</h3>
-            <p>No account. No cloud. No tracking. Your words, your streaks, your progress — all live entirely on your phone. We literally cannot see them, because there's nothing to see.</p>
-            <ul class="why__bullets">
-              <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg> No sign-up required</li>
-              <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg> No analytics SDKs</li>
-              <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg> No third-party trackers</li>
-            </ul>
-          </div>
-          <div class="why__visual">
-            <div class="privacy-visual">
-              <div class="privacy-visual__shield">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
-              </div>
-              <div class="privacy-visual__pulse"></div>
-              <div class="privacy-visual__ping privacy-visual__ping--1">
-                <span>ACCOUNT</span>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6L6 18M6 6l12 12"/></svg>
-              </div>
-              <div class="privacy-visual__ping privacy-visual__ping--2">
-                <span>CLOUD</span>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6L6 18M6 6l12 12"/></svg>
-              </div>
-              <div class="privacy-visual__ping privacy-visual__ping--3">
-                <span>TRACKERS</span>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6L6 18M6 6l12 12"/></svg>
-              </div>
-            </div>
-          </div>
+  <!-- FEATURES -->
+  <section class="section" id="features">
+    <div class="wrap">
+      <div class="eyebrow">Beyond the drill</div>
+      <h2>Get words in fast. Keep them forever.</h2>
+      <p class="lede">Typing vocabulary by hand is the reason most people quit. So most of FlexLex is about skipping that part.</p>
+      <div class="features__grid">
+        <div class="fcard">
+          <div class="fcard__ico" style="background:var(--cat-blue)"><span class="sym">photo_camera</span></div>
+          <h3>Scan a page</h3>
+          <p>Photograph a textbook page — or your own handwriting — and FlexLex pulls the words out. Shoot several pages and it merges them.</p>
         </div>
-
-        <!-- ROW 2: modes -->
-        <div class="why__row why__row--reverse">
-          <div class="why__text">
-            <div class="why__eyebrow why__eyebrow--orange">8 Study Modes</div>
-            <h3>One app. <span class="why__hl why__hl--orange">Eight ways</span> to learn.</h3>
-            <p>Most apps give you flashcards and call it done. FlexLex gives you eight distinct modes — each one activates a different part of your memory, so you never hit a plateau.</p>
-            <ul class="why__bullets">
-              <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg> Passive &amp; active recall</li>
-              <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg> Timed &amp; untimed</li>
-              <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg> Rewards &amp; streaks</li>
-            </ul>
-          </div>
-          <div class="why__visual">
-            <div class="modes-visual">
-              <div class="modes-visual__pill modes-visual__pill--1"><span class="modes-visual__dot" style="background:var(--blue)"></span>Flashcards</div>
-              <div class="modes-visual__pill modes-visual__pill--2"><span class="modes-visual__dot" style="background:var(--purple)"></span>Write</div>
-              <div class="modes-visual__pill modes-visual__pill--3"><span class="modes-visual__dot" style="background:var(--teal)"></span>Spell</div>
-              <div class="modes-visual__pill modes-visual__pill--4"><span class="modes-visual__dot" style="background:var(--green)"></span>Multiple Choice</div>
-              <div class="modes-visual__pill modes-visual__pill--5"><span class="modes-visual__dot" style="background:var(--orange)"></span>Test</div>
-              <div class="modes-visual__pill modes-visual__pill--6"><span class="modes-visual__dot" style="background:var(--pink)"></span>Match</div>
-              <div class="modes-visual__pill modes-visual__pill--7"><span class="modes-visual__dot" style="background:var(--red)"></span>Rush</div>
-              <div class="modes-visual__pill modes-visual__pill--featured">
-                <span class="modes-visual__dot" style="background:linear-gradient(135deg,var(--blue),var(--purple))"></span>
-                Learn Mode
-              </div>
-            </div>
-          </div>
+        <div class="fcard">
+          <div class="fcard__ico" style="background:var(--cat-green)"><span class="sym">table_view</span></div>
+          <h3>Import a spreadsheet</h3>
+          <p>Drop in an Excel, CSV or JSON file and it becomes a set. No row limit in the app.</p>
         </div>
-
-        <!-- ROW 3: SRS science -->
-        <div class="why__row">
-          <div class="why__text">
-            <div class="why__eyebrow why__eyebrow--purple">Science-Backed</div>
-            <h3>Remember every word at the <span class="why__hl why__hl--purple">perfect moment</span>.</h3>
-            <p>Spaced repetition isn't a gimmick — it's decades of cognitive science. FlexLex uses the SM-2 algorithm to schedule reviews right before you'd forget. Words you struggle with appear more often. Words you've mastered fade into the background.</p>
-            <ul class="why__bullets">
-              <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg> Adaptive SM-2 algorithm</li>
-              <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg> Works in every mode</li>
-              <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg> No manual tagging</li>
-            </ul>
-          </div>
-          <div class="why__visual">
-            <div class="curve-visual">
-              <svg viewBox="0 0 320 200" preserveAspectRatio="none" class="curve-visual__svg">
-                <defs>
-                  <linearGradient id="curveGrad" x1="0" x2="0" y1="0" y2="1">
-                    <stop offset="0%" stop-color="rgba(160,124,236,0.5)"/>
-                    <stop offset="100%" stop-color="rgba(160,124,236,0)"/>
-                  </linearGradient>
-                </defs>
-                <!-- grid -->
-                <line x1="0" y1="40" x2="320" y2="40" stroke="rgba(255,255,255,0.04)"/>
-                <line x1="0" y1="100" x2="320" y2="100" stroke="rgba(255,255,255,0.04)"/>
-                <line x1="0" y1="160" x2="320" y2="160" stroke="rgba(255,255,255,0.04)"/>
-                <!-- forgetting curve (decays) -->
-                <path d="M 0 20 Q 40 140 160 170 T 320 185" stroke="rgba(240,96,96,0.55)" stroke-width="2" fill="none" stroke-dasharray="4 4"/>
-                <!-- SRS curve (saw-tooth: climbs on review) -->
-                <path d="M 0 20 L 60 140 L 60 40 L 140 150 L 140 30 L 230 160 L 230 22 L 320 170" stroke="url(#curveGrad)" stroke-width="3" fill="none"/>
-                <!-- review dots -->
-                <circle cx="60" cy="40" r="5" fill="var(--purple)"/>
-                <circle cx="140" cy="30" r="5" fill="var(--purple)"/>
-                <circle cx="230" cy="22" r="5" fill="var(--purple)"/>
-              </svg>
-              <div class="curve-visual__legend">
-                <span class="curve-visual__tag"><span class="curve-visual__swatch curve-visual__swatch--red"></span>Forgetting</span>
-                <span class="curve-visual__tag"><span class="curve-visual__swatch curve-visual__swatch--purple"></span>With SRS</span>
-              </div>
-            </div>
-          </div>
+        <div class="fcard">
+          <div class="fcard__ico" style="background:var(--cat-purple)"><span class="sym">ios_share</span></div>
+          <h3>Share a set as a link</h3>
+          <p>The whole set travels inside the link itself. Nothing is uploaded, and no server ever sees your words.</p>
         </div>
+        <div class="fcard">
+          <div class="fcard__ico" style="background:var(--cat-orange)"><span class="sym">folder</span></div>
+          <h3>Folders that make sense</h3>
+          <p>Colour-coded folders, article colour-coding for German and friends, and bulk edits when a set gets messy.</p>
+        </div>
+        <div class="fcard">
+          <div class="fcard__ico" style="background:var(--xp)"><span class="sym">trending_up</span></div>
+          <h3>Streaks, levels, gems</h3>
+          <p>A streak worth protecting, XP that levels up, chests to open. The part that gets you back tomorrow.</p>
+        </div>
+        <div class="fcard">
+          <div class="fcard__ico" style="background:var(--cat-teal)"><span class="sym">cloud_off</span></div>
+          <h3>Yours, on your device</h3>
+          <p>No account, no sync, no cloud. Back up to a file whenever you like — and it restores in one tap.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <!-- SPACED REPETITION -->
+  <section class="section" id="srs">
+    <div class="wrap srs__grid">
+      <div>
+        <div class="eyebrow">Spaced repetition</div>
+        <h2>Reviewed right before you’d forget.</h2>
+        <p class="lede">Each answer tells FlexLex how well you know a word, and it schedules the next review from that. Words you fumble come back tomorrow. Words you own aren’t seen again for months. You just open the app; it decides what’s due.</p>
+        <a href="/create/" class="btn"><span class="sym">play_arrow</span>Try it in your browser</a>
+      </div>
+      <div class="srs__steps">
+        <div class="srs__step"><span class="srs__day">Today</span><p><strong>die Wolke</strong> — got it wrong, so it’s back tomorrow.</p></div>
+        <div class="srs__step"><span class="srs__day">+1 day</span><p>Right this time. Next review moves out to three days.</p></div>
+        <div class="srs__step"><span class="srs__day">+3 days</span><p>Right again. The gap widens to a week.</p></div>
+        <div class="srs__step"><span class="srs__day">+3 weeks</span><p>Still right. It’s yours — see you in a couple of months.</p></div>
       </div>
     </div>
   </section>
 
   <!-- PRICING -->
   <section class="section pricing" id="pricing">
-    <div class="container">
-      <div class="section-label">Pricing</div>
-      <h2 class="section__title">Simple, Honest <span class="gradient-text">Pricing</span></h2>
-      <p class="section__sub">Choose the plan that works for you. All Pro features included.</p>
-
+    <div class="wrap">
+      <div class="eyebrow">Pricing</div>
+      <h2>Every feature is free.</h2>
+      <p class="lede">All nine modes, unlimited sets and words, scanning, import, backup — free, with no account. Pro is for people who’d rather not see an ad.</p>
       <div class="pricing__grid">
-        <div class="pricing-card">
-          <div class="pricing-card__header">
-            <h3>Free</h3>
-            <div class="pricing-card__price">
-              <span class="pricing-card__amount">$0</span>
-              <span class="pricing-card__period">forever</span>
-            </div>
-            <p class="pricing-card__desc">Try FlexLex and see how it works. Perfect for your first test.</p>
-          </div>
-          <ul class="pricing-card__features">
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-              Flashcards Mode
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-              Up to 2 Sets (30 words each)
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-              Spaced Repetition (SRS)
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-              Manual Word Entry
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-              Dark &amp; Light Themes
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-              Fully Offline
-            </li>
+        <div class="plan">
+          <div class="plan__head"><h3>Free</h3></div>
+          <div class="plan__amount">$0</div>
+          <div class="plan__per">forever · no account</div>
+          <ul class="plan__feat">
+            <li><span class="sym">check_circle</span>All nine study modes</li>
+            <li><span class="sym">check_circle</span>Unlimited sets and words</li>
+            <li><span class="sym">check_circle</span>Scan printed pages and handwriting</li>
+            <li><span class="sym">check_circle</span>Import Excel, CSV and JSON</li>
+            <li><span class="sym">check_circle</span>Backup, export and share links</li>
+            <li><span class="sym">check_circle</span>5 hearts a day for Test and Rush</li>
           </ul>
-          <a href="#download" class="btn btn--glass btn--lg pricing-card__btn">Get Started Free</a>
+          <a href="https://play.google.com/store/apps/details?id=com.flexlex.app" target="_blank" rel="noopener" class="btn btn--full">Download free</a>
         </div>
-
-        <div class="pricing-card pricing-card--pro">
-          <div class="pricing-card__badge">Most Popular</div>
-          <div class="pricing-card__header">
-            <h3>Pro Yearly</h3>
-            <div class="pricing-card__price">
-              <span class="pricing-card__amount">$15</span>
-              <span class="pricing-card__period">per year</span>
-            </div>
-            <p class="pricing-card__desc">Full access to everything. Cancel anytime.</p>
-          </div>
-          <ul class="pricing-card__features">
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-              All 8 Study Modes
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-              Unlimited Sets &amp; Words
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-              Excel/Text Import &amp; OCR Scanner
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-              Bulk Create Words
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-              Translation Suggestions &amp; Spell Check
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-              Article Color Coding
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-              Save Words from Any App
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-              Full Statistics &amp; Progress Tracking
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-              All Future Updates
-            </li>
+        <div class="plan plan--pro">
+          <div class="plan__head"><h3>Pro</h3><span class="plan__badge">NO ADS</span></div>
+          <div class="plan__amount">$15</div>
+          <div class="plan__per">per year</div>
+          <ul class="plan__feat">
+            <li><span class="sym">check_circle</span>No ads, anywhere</li>
+            <li><span class="sym">check_circle</span>Unlimited hearts — never interrupted</li>
+            <li><span class="sym">check_circle</span>Everything in Free, obviously</li>
+            <li><span class="sym">check_circle</span>Supports one developer, not a company</li>
           </ul>
-          <a href="#download" class="btn btn--primary btn--lg pricing-card__btn">Get Pro — $15/year</a>
+          <a href="https://play.google.com/store/apps/details?id=com.flexlex.app" target="_blank" rel="noopener" class="btn btn--go btn--full">Go Pro</a>
         </div>
-
       </div>
     </div>
   </section>
 
   <!-- FAQ -->
-  <section class="section faq" id="faq">
-    <div class="container">
-      <div class="section-label">FAQ</div>
-      <h2 class="section__title">Got <span class="gradient-text">Questions?</span></h2>
-      <p class="section__sub">Everything you need to know about FlexLex.</p>
-
+  <section class="section" id="faq">
+    <div class="wrap">
+      <div class="eyebrow">FAQ</div>
+      <h2>Questions, answered.</h2>
+      <p class="lede">The things people actually ask.</p>
       <div class="faq__list">
         <details class="faq__item">
-          <summary class="faq__question">
-            <span>Is FlexLex really free?</span>
-            <svg class="faq__chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-          </summary>
-          <div class="faq__answer">
-            <p>Yes. The free version includes flashcards, spaced repetition, up to 2 sets with 30 words each, and full offline support. No account required, no ads. Pro unlocks all 8 study modes, unlimited sets and words, import tools, translation suggestions, spell check, and much more — for $15/year.</p>
+          <summary class="faq__q"><span>Is FlexLex really free?</span><span class="sym">expand_more</span></summary>
+          <div class="faq__a">
+            <p>Yes — every feature. All nine study modes, unlimited sets and words, scanning, import, backup and share links, with no account and no sign-up. Pro costs $15 a year and sells exactly two things: no ads, and unlimited hearts. It doesn’t unlock features, because there’s nothing left to unlock.</p>
           </div>
         </details>
-
         <details class="faq__item">
-          <summary class="faq__question">
-            <span>Does it work without internet?</span>
-            <svg class="faq__chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-          </summary>
-          <div class="faq__answer">
-            <p>100%. FlexLex stores everything locally on your device. No cloud sync, no server dependency. Your data stays on your phone, always available, even on a plane or in a remote area.</p>
+          <summary class="faq__q"><span>What are hearts, and will they block me?</span><span class="sym">expand_more</span></summary>
+          <div class="faq__a">
+            <p>Hearts apply to just two modes — Test and Rush. You get 5 a day, and they refill daily. Every other mode is unlimited and always has been. If you run out mid-test, you can watch an ad, spend gems, or wait for tomorrow, and the test resumes where it stopped. Pro users have unlimited hearts.</p>
           </div>
         </details>
-
         <details class="faq__item">
-          <summary class="faq__question">
-            <span>What languages does FlexLex support?</span>
-            <svg class="faq__chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-          </summary>
-          <div class="faq__answer">
-            <p>FlexLex is language-agnostic. You create your own word pairs, so it works with any language combination — English-Japanese, Spanish-French, or even technical terminology. The built-in dictionary suggestions cover dozens of popular languages.</p>
+          <summary class="faq__q"><span>Does it work without internet?</span><span class="sym">expand_more</span></summary>
+          <div class="faq__a">
+            <p>Yes. FlexLex stores everything locally on your device — no cloud sync, no server, no account. Your words are available on a plane or a mountain. The one exception is Story mode, which needs a connection to write the story; everything else, including tapping a word for a translation, runs on the phone.</p>
           </div>
         </details>
-
         <details class="faq__item">
-          <summary class="faq__question">
-            <span>How does spaced repetition work?</span>
-            <svg class="faq__chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-          </summary>
-          <div class="faq__answer">
-            <p>Every time you review a word, FlexLex records whether you knew it, found it hard, or didn't know it. Based on your answers, it calculates the optimal time to show that word again — right before you'd forget it. Words you struggle with appear more frequently; words you know well are spaced further apart.</p>
+          <summary class="faq__q"><span>What is Story mode, and why does it need a key?</span><span class="sym">expand_more</span></summary>
+          <div class="faq__a">
+            <p>Story mode writes a short story using words from your own set, at the CEFR level you pick, and highlights them in the text so you can tap any word for a translation. Because it generates real text, it runs on your own free Google AI key — the app asks for one the first time. That means the AI bill is yours, not ours, and we never sit in the middle of your data.</p>
           </div>
         </details>
-
         <details class="faq__item">
-          <summary class="faq__question">
-            <span>Can I import my existing word lists?</span>
-            <svg class="faq__chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-          </summary>
-          <div class="faq__answer">
-            <p>Yes. FlexLex supports importing from Excel (.xlsx) files and plain text files. You can also use the OCR camera scanner (Pro) to photograph printed word lists, textbook pages, or whiteboards and convert them to flashcards instantly.</p>
+          <summary class="faq__q"><span>What languages does it support?</span><span class="sym">expand_more</span></summary>
+          <div class="faq__a">
+            <p>Any of them. You write both sides of each word pair yourself, so FlexLex works for English–Japanese, Spanish–French, or your chemistry vocabulary. Spoken pronunciation covers around 26 languages; everything else is language-agnostic.</p>
           </div>
         </details>
-
         <details class="faq__item">
-          <summary class="faq__question">
-            <span>What are the pricing options?</span>
-            <svg class="faq__chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-          </summary>
-          <div class="faq__answer">
-            <p>FlexLex Pro is $15/year. It unlocks every feature, including all future updates, and can be cancelled anytime. If your subscription lapses, you get a 7-day grace period before Pro features lock.</p>
+          <summary class="faq__q"><span>How does spaced repetition work?</span><span class="sym">expand_more</span></summary>
+          <div class="faq__a">
+            <p>Every review records whether you knew a word, found it hard, or missed it, and that answer sets when you’ll see it next. Struggle with a word and it comes back quickly; know it cold and the gap stretches out to weeks and then months. The Review queue only ever shows what’s due today.</p>
+          </div>
+        </details>
+        <details class="faq__item">
+          <summary class="faq__q"><span>Can I import my existing word lists?</span><span class="sym">expand_more</span></summary>
+          <div class="faq__a">
+            <p>Yes — Excel (.xlsx), CSV, and JSON, with no row limit in the app. You can also photograph a printed list, a textbook page, or your own handwriting and let the scanner do it. You can even <a href="/create/">build a set right here in your browser</a> and send it to your phone as a link.</p>
+          </div>
+        </details>
+        <details class="faq__item">
+          <summary class="faq__q"><span>Is my data safe if I switch phones?</span><span class="sym">expand_more</span></summary>
+          <div class="faq__a">
+            <p>Back up to a file whenever you like and restore it in one tap — the backup holds every set, folder and bit of progress. FlexLex also writes an automatic backup to your Downloads folder after an update, which survives even uninstalling the app. Because there’s no account, that file is the whole story: keep it and you keep everything.</p>
           </div>
         </details>
       </div>
@@ -730,101 +353,86 @@
   </section>
 
   <!-- FEEDBACK -->
-  <section class="section feedback" id="feedback">
-    <div class="container">
-      <div class="section-label">Feedback</div>
-      <h2 class="section__title">Got an Idea?<br><span class="gradient-text">We're Listening.</span></h2>
-      <p class="section__sub">Help us make FlexLex better. Share your suggestions, feature requests, or anything on your mind.</p>
+  <section class="section" id="feedback">
+    <div class="wrap">
+      <div class="eyebrow">Feedback</div>
+      <h2>Got an idea?</h2>
+      <p class="lede">FlexLex is built by one person, and most of what’s in it started as someone’s email. Tell me what’s missing.</p>
 
       <form class="feedback__form" action="https://formsubmit.co/91e725936700f15fa10966d7987dca8e" method="POST">
-        <!-- FormSubmit config -->
         <input type="hidden" name="_subject" value="FlexLex Feedback from Website">
         <input type="hidden" name="_captcha" value="true">
         <input type="hidden" name="_next" value="https://flexlex.app#feedback">
         <input type="text" name="_honey" style="display:none">
 
         <div class="feedback__row">
-          <div class="feedback__field">
+          <div class="field">
             <label for="feedback-name">Name</label>
             <input type="text" id="feedback-name" name="name" placeholder="Your name" required>
           </div>
-          <div class="feedback__field">
+          <div class="field">
             <label for="feedback-email">Email</label>
             <input type="email" id="feedback-email" name="email" placeholder="you@example.com" required>
           </div>
         </div>
-        <div class="feedback__field">
-          <label for="feedback-message">Your Idea</label>
+        <div class="field">
+          <label for="feedback-message">Your idea</label>
           <textarea id="feedback-message" name="message" rows="5" placeholder="What would make FlexLex better for you?" required></textarea>
         </div>
-        <button type="submit" class="btn btn--primary btn--lg feedback__submit">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
-          Send Feedback
-        </button>
+        <button type="submit" class="btn btn--go feedback__submit"><span class="sym">send</span>Send feedback</button>
       </form>
     </div>
   </section>
 
-  <!-- CTA / DOWNLOAD -->
+  <!-- DOWNLOAD -->
   <section class="section cta" id="download">
-    <div class="container cta__inner">
-      <div class="cta__glow"></div>
-      <div class="section-label section-label--light">Download</div>
-      <h2>Start Learning<br><span class="gradient-text">Today</span></h2>
-      <p>Free. No account. No internet required. Just download and start.</p>
+    <div class="wrap">
+      <div class="eyebrow">Download</div>
+      <h2>Start learning today.</h2>
+      <p>Free, no account, no internet required. Download it and start.</p>
       <div class="cta__buttons">
-        <a href="#" class="store-badge store-badge--apple" aria-disabled="true" title="Coming soon to iOS" style="opacity:.45;pointer-events:none">
-          <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store — coming soon">
-        </a>
-        <a href="https://play.google.com/store/apps/details?id=com.flexlex.app" target="_blank" rel="noopener" class="store-badge store-badge--google">
+        <a href="https://play.google.com/store/apps/details?id=com.flexlex.app" target="_blank" rel="noopener" class="store-badge">
           <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play">
         </a>
       </div>
-      <p class="cta__note">Now on Google Play — iOS coming soon</p>
-      <div class="cta__platforms">
-        <span>Android 8+</span>
-        <span class="cta__dot"></span>
-        <span>iOS 13+</span>
-      </div>
+      <p class="cta__note">Android 8 and up · iOS coming later</p>
     </div>
   </section>
 
   <!-- FOOTER -->
   <footer class="footer">
-    <div class="container footer__inner">
+    <div class="wrap footer__inner">
       <div class="footer__brand">
-        <a href="#" class="nav__logo"><img src="FL-logo.png" alt="FlexLex" class="logo-icon"> FlexLex</a>
-        <p>Master vocabulary your way.</p>
+        <a href="#" class="nav__logo"><img src="FL-logo.png" alt="">FlexLex</a>
+        <p>Learn words. Remember them.</p>
       </div>
       <div class="footer__columns">
         <div class="footer__col">
           <h4>Product</h4>
+          <a href="#modes">Study modes</a>
+          <a href="#story">Story mode</a>
           <a href="#features">Features</a>
-          <a href="#modes">Study Modes</a>
           <a href="#pricing">Pricing</a>
-          <a href="#download">Download</a>
+          <a href="/create/">Create a set</a>
         </div>
         <div class="footer__col">
           <h4>Support</h4>
           <a href="#faq">FAQ</a>
-          <a href="mailto:support@flexlex.app">Contact Us</a>
+          <a href="#feedback">Send feedback</a>
+          <a href="mailto:support@flexlex.app">support@flexlex.app</a>
         </div>
         <div class="footer__col">
           <h4>Legal</h4>
-          <a href="https://ondra001.github.io/legal-docs/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a>
-          <a href="https://ondra001.github.io/legal-docs/terms-of-service" target="_blank" rel="noopener">Terms of Service</a>
+          <a href="https://ondra001.github.io/legal-docs/privacy-policy" target="_blank" rel="noopener">Privacy policy</a>
+          <a href="https://ondra001.github.io/legal-docs/terms-of-service" target="_blank" rel="noopener">Terms of service</a>
         </div>
       </div>
-      <div class="footer__copy">
-        &copy; 2026 FlexLex. All rights reserved.
-      </div>
+      <div class="footer__copy">© 2026 FlexLex</div>
     </div>
   </footer>
 
-  <!-- BACK TO TOP -->
-  <button class="back-to-top" id="backToTop" aria-label="Back to top">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
-  </button>
+  <button class="back-to-top" id="backToTop" aria-label="Back to top"><span class="sym">arrow_upward</span></button>
+  <div id="tip" role="status" aria-live="polite"></div>
 
   <script src="script.js"></script>
 </body>

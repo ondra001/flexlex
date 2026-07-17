@@ -1,0 +1,329 @@
+/* ══════════════════════════════════════════════════════════════════════
+   FlexLex — shared theme tokens
+   ----------------------------------------------------------------------
+   These are lifted from the Android app so the site and the product read
+   as one thing. Do not "improve" a value here without changing it in the
+   app too — the point is that they match.
+
+     scaffold   #FBF7EC / #16150F   duok app_theme.dart:290
+     card       #FFFFFF / #222017   duok app_theme.dart:293
+     onSurface  #211F26 / #E7E4EE   duok app_theme.dart:304
+     muted      #7B7390 / #98919F   duok app_theme.dart:306
+     accent     #43A047             duok accent_palette.dart:15  ("Green", index 0 = default)
+     radii      12 / 16 / 20 / 26 / pill    duok app_tokens.dart:18
+     game       streak #FF8A00 · gem #12B6F3 · heart #FF4B6E · xp #7B3FE4 · gold #FFC107
+
+   Loaded by: /index.html, /create/, /s/  — and read by study.js.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── LIGHT (default) ── */
+:root {
+  --scaffold: #FBF7EC;
+  --card: #FFFFFF;
+  --card-2: #F7F3E7;
+  --ink: #211F26;
+  --muted: #7B7390;
+  --label: #2C2C34;
+
+  --accent: #43A047;
+  --accent-lite: #55BF5A;   /* fx_widgets _glossy(): lighten(accent, .10) */
+  --accent-depth: #2F7D33;  /* fx_widgets _darken() — the chunky shadow    */
+  --accent-soft: #E8F5E9;
+  --on-accent: #FFFFFF;
+
+  /* cardBorderColor(): alphaBlend(primary @16%, #E6E0EF) under the green accent */
+  --card-border: #CCD6D4;
+  /* cardShadow(): darken(primary,.04) @11%, blur 16, y+6, spread -4 */
+  --card-shadow: 0 6px 16px -4px rgba(62, 150, 66, .11);
+
+  --btn-face: linear-gradient(180deg, #FFFFFF, #F3EFE4);
+  --btn-depth: #DED8C8;
+  --track: #EFEADC;
+  --hairline: #EDE6D6;
+
+  /* Fixed gamification colours — never tied to the accent (app_tokens.dart:34) */
+  --streak: #FF8A00;
+  --gem: #12B6F3;
+  --heart: #FF4B6E;
+  --xp: #7B3FE4;
+  --gold: #FFC107;
+  --danger: #E23B34;
+
+  /* Story band */
+  --story-band: #FFF7E8;
+  --story-band-line: #F3E3C4;
+  --story-ink: #B67C00;
+  --story-chip: #F6F1E3;
+  --story-hl: #FFF1D6;
+
+  --r-sm: 12px;
+  --r-md: 16px;
+  --r-lg: 20px;
+  --r-xl: 26px;
+  --r-pill: 999px;
+
+  /* AppDurations (app_tokens.dart:26) */
+  --t-fast: 120ms;
+  --t-base: 220ms;
+
+  --tooltip: #2C2A35;   /* the app's SnackBar surface (app_theme.dart:396) */
+
+  color-scheme: light;
+}
+
+/* ── DARK ──
+   Warm near-black, not a cool/lilac one — a blue-grey card over this
+   scaffold reads as blue. Same reasoning as app_theme.dart:287-293. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --scaffold: #16150F;
+    --card: #222017;
+    --card-2: #2B291E;
+    --ink: #E7E4EE;
+    --muted: #98919F;
+    --label: #FFFFFF;
+
+    --accent: #43A047;
+    --accent-lite: #55BF5A;
+    --accent-depth: #2C6B2F;
+    --accent-soft: #1D2B1E;
+    --on-accent: #FFFFFF;
+
+    --card-border: rgba(255, 255, 255, .10);
+    --card-shadow: 0 8px 18px -8px rgba(0, 0, 0, .38);
+
+    --btn-face: linear-gradient(180deg, #2E2B21, #26241C);
+    --btn-depth: #14130E;
+    --track: #2E2B21;
+    --hairline: #35322A;
+
+    --danger: #FF5A52;
+
+    --story-band: #1D1B12;
+    --story-band-line: #3A3323;
+    --story-ink: #F0A818;
+    --story-chip: #2E2B21;
+    --story-hl: #3A2F14;
+
+    color-scheme: dark;
+  }
+}
+
+/* The in-page toggle must beat the media query in BOTH directions. */
+:root[data-theme="dark"] {
+  --scaffold: #16150F;
+  --card: #222017;
+  --card-2: #2B291E;
+  --ink: #E7E4EE;
+  --muted: #98919F;
+  --label: #FFFFFF;
+  --accent: #43A047;
+  --accent-lite: #55BF5A;
+  --accent-depth: #2C6B2F;
+  --accent-soft: #1D2B1E;
+  --on-accent: #FFFFFF;
+  --card-border: rgba(255, 255, 255, .10);
+  --card-shadow: 0 8px 18px -8px rgba(0, 0, 0, .38);
+  --btn-face: linear-gradient(180deg, #2E2B21, #26241C);
+  --btn-depth: #14130E;
+  --track: #2E2B21;
+  --hairline: #35322A;
+  --danger: #FF5A52;
+  --story-band: #1D1B12;
+  --story-band-line: #3A3323;
+  --story-ink: #F0A818;
+  --story-chip: #2E2B21;
+  --story-hl: #3A2F14;
+  color-scheme: dark;
+}
+
+/* ══ STUDY-MODE TILE COLOURS ══
+   CategoryColors (app_tokens.dart:51). Each mode keeps a fixed hue so the
+   eight stay recognisable at a glance whatever the accent is.
+   Dark values are the app's own recipe, precomputed:
+     bg    = alphaBlend(color @22%, scaffold #16150F)
+     depth = alphaBlend(color @45%, black)                (set_detail_screen.dart:1390) */
+:root {
+  --cat-green: #58CC02;  --cat-green-soft: #E7F7D8;  --cat-green-depth: #CDE6B0;
+  --cat-blue: #12B6F3;   --cat-blue-soft: #DCF1FF;   --cat-blue-depth: #BCE3FB;
+  --cat-purple: #A868F0; --cat-purple-soft: #F1E6FF; --cat-purple-depth: #E0CCF7;
+  --cat-teal: #14B8A6;   --cat-teal-soft: #D4F3EE;   --cat-teal-depth: #B7E6DF;
+  --cat-orange: #FF9600; --cat-orange-soft: #FFEEDE; --cat-orange-depth: #FBDCBD;
+  --cat-pink: #FF4B6E;   --cat-pink-soft: #FFE1E8;   --cat-pink-depth: #F6C9D3;
+  --cat-indigo: #3B82F6; --cat-indigo-soft: #E4F0FF; --cat-indigo-depth: #C5DFFB;
+  --cat-lime: #4AD66D;   --cat-lime-soft: #E7F7D8;   --cat-lime-depth: #CDE6B0;
+  --cat-amber: #F0A818;  --cat-amber-soft: #FFF1D6;  --cat-amber-depth: #F7DFAE;
+  --tile-label: var(--label);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --cat-green-soft: #253D0C;  --cat-green-depth: #285C01;
+    --cat-blue-soft: #153841;   --cat-blue-depth: #08526D;
+    --cat-purple-soft: #362741; --cat-purple-depth: #4C2F6C;
+    --cat-teal-soft: #163930;   --cat-teal-depth: #09534B;
+    --cat-orange-soft: #49310C; --cat-orange-depth: #734400;
+    --cat-pink-soft: #492124;   --cat-pink-depth: #732232;
+    --cat-indigo-soft: #1E2D42; --cat-indigo-depth: #1B3B6F;
+    --cat-lime-soft: #213F24;   --cat-lime-depth: #216031;
+    --cat-amber-soft: #463511;  --cat-amber-depth: #6C4C0B;
+  }
+}
+:root[data-theme="dark"] {
+  --cat-green-soft: #253D0C;  --cat-green-depth: #285C01;
+  --cat-blue-soft: #153841;   --cat-blue-depth: #08526D;
+  --cat-purple-soft: #362741; --cat-purple-depth: #4C2F6C;
+  --cat-teal-soft: #163930;   --cat-teal-depth: #09534B;
+  --cat-orange-soft: #49310C; --cat-orange-depth: #734400;
+  --cat-pink-soft: #492124;   --cat-pink-depth: #732232;
+  --cat-indigo-soft: #1E2D42; --cat-indigo-depth: #1B3B6F;
+  --cat-lime-soft: #213F24;   --cat-lime-depth: #216031;
+  --cat-amber-soft: #463511;  --cat-amber-depth: #6C4C0B;
+}
+
+/* ══ BASE ══ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--scaffold);
+  color: var(--ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  transition: background var(--t-base), color var(--t-base);
+}
+/* Nunito 900, tight — buildAppTextTheme() headings (app_typography.dart:18) */
+h1, h2, h3, h4, .nun {
+  font-family: 'Nunito', system-ui, sans-serif;
+  font-weight: 900;
+  letter-spacing: -.03em;
+  line-height: 1.06;
+}
+a { color: inherit; text-decoration: none; }
+ul, ol { list-style: none; }
+img { max-width: 100%; display: block; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 8px; }
+
+/* Material Symbols Rounded at FILL 1 / wght 600 — the app's exact icon set */
+.sym {
+  font-family: 'Material Symbols Rounded';
+  font-weight: 600;
+  font-style: normal;
+  line-height: 1;
+  font-variation-settings: 'FILL' 1, 'wght' 600;
+  user-select: none;
+  flex: none;
+}
+
+/* ══ PRIMITIVES ══ */
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+/* Glossy button — fx_widgets.dart _glossy() + a solid depth shadow that
+   collapses on press, exactly like the app's buttons. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  font-family: 'Nunito', system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: -.01em;
+  padding: 14px 24px;
+  border-radius: var(--r-md);
+  background: var(--btn-face);
+  color: var(--ink);
+  box-shadow: 0 4px 0 var(--btn-depth);
+  transition: transform var(--t-fast) ease-out, box-shadow var(--t-fast) ease-out;
+}
+.btn:active { transform: translateY(4px); box-shadow: none; }
+.btn--go {
+  background: linear-gradient(180deg, var(--accent-lite), var(--accent));
+  color: var(--on-accent);
+  box-shadow: 0 4px 0 var(--accent-depth);
+}
+.btn--sm { padding: 9px 18px; font-size: .9rem; box-shadow: 0 3px 0 var(--btn-depth); }
+.btn--go.btn--sm { box-shadow: 0 3px 0 var(--accent-depth); }
+.btn--sm:active { transform: translateY(3px); }
+.btn--full { width: 100%; }
+.btn .sym { font-size: 20px; }
+
+/* Card — elevation 0 + hairline + accent-tinted shadow (fx_widgets cardShadow) */
+.card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--card-shadow);
+}
+
+/* Study-mode tile — set_detail_screen.dart:1407 */
+.tile {
+  border-radius: 18px;
+  padding: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  transition: transform var(--t-fast) ease-out, box-shadow var(--t-fast) ease-out;
+}
+.tile:active { transform: translateY(3px); box-shadow: none !important; }
+.tile-ico {
+  width: 40px; height: 40px;
+  border-radius: 12px;
+  display: grid; place-items: center;
+  color: #fff;
+}
+.tile-ico .sym { font-size: 21px; }
+.tile-l {
+  font-family: 'Nunito', system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  color: var(--tile-label);
+  letter-spacing: -.01em;
+}
+.tile-d { font-size: .78rem; color: var(--muted); font-weight: 500; line-height: 1.4; margin-top: 2px; }
+
+.c-green  { background: var(--cat-green-soft);  box-shadow: 0 3px 0 var(--cat-green-depth); }
+.c-blue   { background: var(--cat-blue-soft);   box-shadow: 0 3px 0 var(--cat-blue-depth); }
+.c-purple { background: var(--cat-purple-soft); box-shadow: 0 3px 0 var(--cat-purple-depth); }
+.c-teal   { background: var(--cat-teal-soft);   box-shadow: 0 3px 0 var(--cat-teal-depth); }
+.c-orange { background: var(--cat-orange-soft); box-shadow: 0 3px 0 var(--cat-orange-depth); }
+.c-pink   { background: var(--cat-pink-soft);   box-shadow: 0 3px 0 var(--cat-pink-depth); }
+.c-indigo { background: var(--cat-indigo-soft); box-shadow: 0 3px 0 var(--cat-indigo-depth); }
+.c-lime   { background: var(--cat-lime-soft);   box-shadow: 0 3px 0 var(--cat-lime-depth); }
+.c-green  .tile-ico { background: var(--cat-green); }
+.c-blue   .tile-ico { background: var(--cat-blue); }
+.c-purple .tile-ico { background: var(--cat-purple); }
+.c-teal   .tile-ico { background: var(--cat-teal); }
+.c-orange .tile-ico { background: var(--cat-orange); }
+.c-pink   .tile-ico { background: var(--cat-pink); }
+.c-indigo .tile-ico { background: var(--cat-indigo); }
+.c-lime   .tile-ico { background: var(--cat-lime); }
+
+/* ══ THEME TOGGLE ══ */
+.theme-btn {
+  width: 38px; height: 38px;
+  border-radius: var(--r-sm);
+  display: grid; place-items: center;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  color: var(--ink);
+  transition: background var(--t-fast), transform var(--t-fast);
+}
+.theme-btn:hover { background: var(--card-2); }
+.theme-btn:active { transform: scale(.94); }
+.theme-btn .sym { font-size: 20px; }
+/* Swap the glyph with the theme rather than toggling a class in JS. */
+.theme-btn .sym-dark { display: none; }
+:root[data-theme="dark"] .theme-btn .sym-light { display: none; }
+:root[data-theme="dark"] .theme-btn .sym-dark { display: block; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-btn .sym-light { display: none; }
+  :root:not([data-theme="light"]) .theme-btn .sym-dark { display: block; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
